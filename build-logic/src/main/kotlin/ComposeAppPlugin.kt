@@ -1,5 +1,6 @@
 import extensions.compose
 import extensions.configureAndroidPlugin
+import extensions.configureApplicationPlugin
 import extensions.configureSourceSets
 import extensions.libs
 import org.gradle.api.Plugin
@@ -7,12 +8,13 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal fun Project.configureFeature() {
+internal fun Project.configureComposeApp() {
     with(pluginManager) {
         apply("org.jetbrains.kotlin.multiplatform")
         apply("org.jetbrains.compose")
     }
-    configureAndroidPlugin()
+    configureApplicationPlugin()
+
     extensions.configure<KotlinMultiplatformExtension> {
         applyDefaultHierarchyTemplate()
 
@@ -39,8 +41,6 @@ internal fun Project.configureFeature() {
                 implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                implementation(project(":core:domain"))
-
                 implementation(libs.findLibrary("voyager.navigator").get())
                 implementation(libs.findLibrary("composeImageLoader").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
@@ -64,10 +64,10 @@ internal fun Project.configureFeature() {
     }
 }
 
-class FeaturePlugin : Plugin<Project> {
+class ComposeAppPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            configureFeature()
+            configureComposeApp()
         }
     }
 }

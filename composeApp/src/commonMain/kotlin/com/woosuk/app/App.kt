@@ -23,7 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -104,14 +103,5 @@ internal fun App() = AppTheme {
         ) {
             Text("Login")
         }
-
-        TextButton(
-            onClick = { openUrl("https://github.com/terrakok") },
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-        ) {
-            Text("Open github")
-        }
     }
 }
-
-internal expect fun openUrl(url: String?)

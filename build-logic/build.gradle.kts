@@ -11,9 +11,17 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("composeAppPlugin"){
+            id= "convention.composeApp"
+            implementationClass = "ComposeAppPlugin"
+        }
         register("featurePlugin") {
             id = "convention.feature"
             implementationClass = "FeaturePlugin"
+        }
+        register("kotlinPlugin"){
+            id = "convention.kotlin"
+            implementationClass = "KotlinPlugin"
         }
         register("androidPlugin") {
             id = "convention.android.library"
@@ -22,10 +30,6 @@ gradlePlugin {
         register("applicationPlugin") {
             id = "convention.android.application"
             implementationClass = "ApplicationPlugin"
-        }
-        register("kotlinPlugin"){
-            id = "convention.kotlin"
-            implementationClass = "KotlinPlugin"
         }
     }
 }
