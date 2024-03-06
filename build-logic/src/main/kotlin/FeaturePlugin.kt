@@ -46,6 +46,7 @@ internal fun Project.configureFeature() {
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("moko.mvvm").get())
                 implementation(libs.findLibrary("koin.core").get())
+                implementation(libs.findLibrary("koin.compose").get())
             }
 
             commonTest.dependencies {
@@ -53,6 +54,7 @@ internal fun Project.configureFeature() {
             }
 
             androidMain.dependencies {
+                implementation(libs.findLibrary("koin.android").get())
                 implementation(libs.findLibrary("androidx.appcompat").get())
                 implementation(libs.findLibrary("compose.uitooling").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.android").get())
