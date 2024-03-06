@@ -24,13 +24,6 @@ internal fun KotlinMultiplatformExtension.configureSourceSets(
     }
 }
 
-internal fun Project.kotlin(action: CommonExtension<*, *, *, *, *>.() -> Unit) {
-    val kotlinExtension = extensions.getByName("kotlin")
-    if (kotlinExtension is CommonExtension<*, *, *, *, *>) {
-        kotlinExtension.apply(action)
-    }
-}
-
 internal val Project.compose: ComposePlugin.Dependencies
     get() = ComposePlugin.Dependencies(this)
 
