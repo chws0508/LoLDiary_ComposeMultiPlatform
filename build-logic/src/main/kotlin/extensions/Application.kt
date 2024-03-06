@@ -1,5 +1,6 @@
+package extensions
+
 import com.android.build.api.dsl.ApplicationExtension
-import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

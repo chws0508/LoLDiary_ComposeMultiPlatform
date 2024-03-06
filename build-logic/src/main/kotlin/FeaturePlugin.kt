@@ -1,4 +1,5 @@
 import extensions.compose
+import extensions.configureAndroidPlugin
 import extensions.configureSourceSets
 import extensions.libs
 import org.gradle.api.Plugin
@@ -27,16 +28,7 @@ internal fun Project.configureComposeMultiplatform() {
         }
 
         jvm()
-        listOf(
-            iosX64(),
-            iosArm64(),
-            iosSimulatorArm64(),
-        ).forEach { target ->
-            target.binaries.framework {
-                baseName = "ComposeApp"
-                isStatic = true
-            }
-        }
+
         configureSourceSets {
             all {
                 languageSettings {
@@ -44,26 +36,24 @@ internal fun Project.configureComposeMultiplatform() {
                 }
             }
             commonMain.dependencies {
-                implementation(compose(this@configureComposeMultiplatform).runtime)
-                implementation(compose(this@configureComposeMultiplatform).material3)
-                implementation(compose(this@configureComposeMultiplatform).materialIconsExtended)
+                implementation(compose.runtime)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose(this@configureComposeMultiplatform).components.resources)
+                implementation(compose.components.resources)
                 implementation(project(":core:domain"))
 
-                implementation(libs.findLibrary("voyager.navigator"))
-                implementation(libs.findLibrary("composeImageLoader"))
-                implementation(libs.findLibrary("kotlinx.coroutines.core"))
-                implementation(libs.findLibrary("moko.mvvm"))
-                implementation(libs.findLibrary("ktor.core"))
-                implementation(libs.findLibrary("kotlinx.serialization.json"))
-                implementation(libs.findLibrary("koin.core"))
+                implementation(libs.findLibrary("voyager.navigator").get())
+                implementation(libs.findLibrary("composeImageLoader").get())
+                implementation(libs.findLibrary("kotlinx.coroutines.core").get())
+                implementation(libs.findLibrary("moko.mvvm").get())
+                implementation(libs.findLibrary("koin.core").get())
             }
 
             androidMain.dependencies {
-                implementation(libs.findLibrary("androidx.appcompat"))
-                implementation(libs.findLibrary("compose.uitooling"))
-                implementation(libs.findLibrary("kotlinx.coroutines.android"))
+                implementation(libs.findLibrary("androidx.appcompat").get())
+                implementation(libs.findLibrary("compose.uitooling").get())
+                implementation(libs.findLibrary("kotlinx.coroutines.android").get())
             }
 
             iosMain.dependencies {
@@ -72,7 +62,7 @@ internal fun Project.configureComposeMultiplatform() {
     }
 }
 
-class KotlinMultiplatformConventionPlugin : Plugin<Project> {
+class FeaturePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             configureComposeMultiplatform()

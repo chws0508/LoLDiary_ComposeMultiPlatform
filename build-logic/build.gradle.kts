@@ -11,9 +11,9 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("kotlinMultiplatformPlugin") {
-            id = "convention.multiplatform"
-            implementationClass = "KotlinMultiplatformConventionPlugin"
+        register("featurePlugin") {
+            id = "convention.feature"
+            implementationClass = "FeaturePlugin"
         }
         register("androidPlugin") {
             id = "convention.android.library"
@@ -22,6 +22,10 @@ gradlePlugin {
         register("applicationPlugin") {
             id = "convention.android.application"
             implementationClass = "ApplicationPlugin"
+        }
+        register("kotlinPlugin"){
+            id = "convention.kotlin"
+            implementationClass = "KotlinPlugin"
         }
     }
 }

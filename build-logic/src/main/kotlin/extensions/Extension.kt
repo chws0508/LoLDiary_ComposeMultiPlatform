@@ -16,13 +16,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 internal val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal fun Project.android(action: CommonExtension<*, *, *, *, *>.() -> Unit) {
-    val androidExtension = extensions.getByName("android")
-    if (androidExtension is CommonExtension<*, *, *, *, *>) {
-        androidExtension.apply(action)
-    }
-}
-
 internal fun KotlinMultiplatformExtension.configureSourceSets(
     action: Action<NamedDomainObjectContainer<KotlinSourceSet>>,
 ) {
@@ -31,5 +24,25 @@ internal fun KotlinMultiplatformExtension.configureSourceSets(
     }
 }
 
-internal fun KotlinMultiplatformExtension.compose(plugin: Project):
-        ComposePlugin.Dependencies = ComposePlugin.Dependencies(plugin)
+internal fun Project.kotlin(action: CommonExtension<*, *, *, *, *>.() -> Unit) {
+    val kotlinExtension = extensions.getByName("kotlin")
+    if (kotlinExtension is CommonExtension<*, *, *, *, *>) {
+        kotlinExtension.apply(action)
+    }
+}
+
+internal val Project.compose: ComposePlugin.Dependencies
+    get() = ComposePlugin.Dependencies(this)
+
+fun KotlinMultiplatformExtension.configureIos(
+    baseName: String
+) = listOf(
+    iosX64(),
+    iosArm64(),
+    iosSimulatorArm64(),
+).forEach { iosTarget ->
+    iosTarget.binaries.framework {
+        this.baseName = baseName
+        isStatic = true
+    }
+}
