@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "1.9.22"
+kotlin = "1.9.20"
 compose = "1.6.0"
 agp = "8.2.0"
 androidx-appcompat = "1.6.1"
@@ -8,7 +8,7 @@ androidx-activityCompose = "1.8.2"
 compose-uitooling = "1.6.2"
 voyager = "1.0.0"
 composeImageLoader = "1.7.1"
-buildConfig = "4.1.1"
+buildConfig = "5.3.5"
 kotlinx-coroutines = "1.7.3"
 moko-mvvm = "0.16.1"
 ktor = "2.3.7"
@@ -19,9 +19,9 @@ sqlDelight = "2.0.1"
 kotest = "5.8"
 kotestPlugin = "5.8.0"
 composeCompiler = "1.5.4"
-compileSdk = "34"
-targetSdk = "34"
-minSdk = "26"
+tocuhlab = "2.0.6"
+# skydoves
+sandwich = "2.0.5"
 
 [libraries]
 
@@ -47,9 +47,9 @@ moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
-ktor-client-curl = { module = "io.ktor:ktor-client-curl", version.ref = "ktor" }
-ktor-client-winhttp = { module = "io.ktor:ktor-client-winhttp", version.ref = "ktor" }
+ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 ## kotlinx-serilization ##
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
@@ -65,8 +65,16 @@ sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", ver
 sqlDelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 sqlDelight-driver-js = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
 
+# kotlin test
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 
+# Skydoves
+skydoves-sandwich = { group = "com.github.skydoves", name = "sandwich-ktor", version.ref = "sandwich" }
+
+# touchlab
+touchlab-concurrency = { group = "co.touchlab", name = "stately-concurrency", version.ref = "tocuhlab" }
+touchlab-strict = { group = "co.touchlab", name = "stately-strict", version.ref = "tocuhlab" }
+touchlab-common = { group = "co.touchlab", name = "stately-common", version.ref = "tocuhlab" }
 
 ## plugins
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

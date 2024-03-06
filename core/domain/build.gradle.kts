@@ -4,4 +4,4 @@ plugins {
     id("convention.kotlin")
 }
 
-kotlin { configureIos("domain") }
+kotlin { configureIos(baseName = "domain") }

@@ -5,6 +5,7 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureFeature() {
@@ -47,6 +48,7 @@ internal fun Project.configureFeature() {
                 implementation(libs.findLibrary("moko.mvvm").get())
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("koin.compose").get())
+                implementation(libs.findLibrary("touchlab.common").get())
             }
 
             commonTest.dependencies {

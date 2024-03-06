@@ -24,12 +24,16 @@ gradlePlugin {
             implementationClass = "KotlinPlugin"
         }
         register("androidPlugin") {
-            id = "convention.android.library"
+            id = "android.library"
             implementationClass = "AndroidPlugin"
         }
         register("applicationPlugin") {
-            id = "convention.android.application"
+            id = "application.library"
             implementationClass = "ApplicationPlugin"
+        }
+        register("kotlinAndroidPlugin") {
+            id = "convention.android"
+            implementationClass = "KotlinAndroidPlugin"
         }
     }
 }

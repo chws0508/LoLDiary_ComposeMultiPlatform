@@ -1,3 +1,5 @@
+package com.woosuk.domain.model
+
 data class LoginInfo(
     val nickName: String,
     val tag: String

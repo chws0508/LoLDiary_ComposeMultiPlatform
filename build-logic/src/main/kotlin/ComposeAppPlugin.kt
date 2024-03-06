@@ -6,6 +6,7 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureComposeApp() {
@@ -47,6 +48,7 @@ internal fun Project.configureComposeApp() {
                 implementation(libs.findLibrary("moko.mvvm").get())
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("koin.compose").get())
+                implementation(libs.findLibrary("touchlab.common").get())
             }
 
             commonTest.dependencies {
@@ -55,6 +57,7 @@ internal fun Project.configureComposeApp() {
 
             androidMain.dependencies {
                 implementation(libs.findLibrary("koin.android").get())
+                implementation(libs.findLibrary("androidx.activityCompose").get())
                 implementation(libs.findLibrary("androidx.appcompat").get())
                 implementation(libs.findLibrary("compose.uitooling").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.android").get())

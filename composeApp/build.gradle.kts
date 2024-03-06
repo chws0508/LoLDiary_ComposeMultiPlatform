@@ -3,7 +3,6 @@ import extensions.configureIos
 plugins { id("convention.composeApp") }
 
 kotlin {
-
     configureIos(baseName = "composeApp")
 
     sourceSets {
