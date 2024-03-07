@@ -7,6 +7,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(project(":core:network"))
+            implementation(project(":core:data"))
             implementation(project(":core:domain"))
             implementation(project(":feature:onboarding"))
         }

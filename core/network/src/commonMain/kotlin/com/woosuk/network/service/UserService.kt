@@ -2,14 +2,14 @@ package com.woosuk.network.service
 
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.ktor.getApiResponse
-import com.woosuk.network.model.UserUidDto
+import com.woosuk.network.model.UserAccountDto
 import io.ktor.client.HttpClient
 
 interface UserService {
     suspend fun getUserAccount(
         gameName: String,
         tagLine: String,
-    ): ApiResponse<UserUidDto>
+    ): ApiResponse<UserAccountDto>
 }
 
 class DefaultUserService(
@@ -19,8 +19,8 @@ class DefaultUserService(
     override suspend fun getUserAccount(
         gameName: String,
         tagLine: String,
-    ): ApiResponse<UserUidDto> {
-        return httpClient.getApiResponse<UserUidDto>(
+    ): ApiResponse<UserAccountDto> {
+        return httpClient.getApiResponse<UserAccountDto>(
             "riot/account/v1/accounts/by-riot-id/$gameName/$tagLine"
         )
     }

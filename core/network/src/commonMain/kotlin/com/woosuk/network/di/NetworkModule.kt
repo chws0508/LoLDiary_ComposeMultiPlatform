@@ -1,7 +1,9 @@
 package com.woosuk.network.di
 
 import LoLDiary.core.network.BuildConfig
+import com.woosuk.network.service.DefaultUserService
 import com.woosuk.network.service.Server
+import com.woosuk.network.service.UserService
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,6 +17,7 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val networkModule = module {
@@ -77,6 +80,7 @@ val networkModule = module {
 
 val serviceModule = module {
     includes(networkModule)
+    single<UserService> { DefaultUserService(get(named("Kr"))) }
 }
 
 private const val TIME_OUT = 3000L

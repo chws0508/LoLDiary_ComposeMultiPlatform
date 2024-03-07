@@ -1,3 +1,4 @@
+import extensions.compose
 import extensions.configureAndroidPlugin
 import extensions.configureSourceSets
 import extensions.libs
@@ -10,6 +11,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 internal fun Project.configureKotlinAndroidPlugin() {
     with(pluginManager) {
         apply("org.jetbrains.kotlin.multiplatform")
+        apply("org.jetbrains.compose")
     }
     configureAndroidPlugin()
     extensions.configure<KotlinMultiplatformExtension> {
@@ -26,6 +28,8 @@ internal fun Project.configureKotlinAndroidPlugin() {
 
         configureSourceSets {
             commonMain.dependencies {
+                implementation(compose.runtime)
+                implementation(libs.findLibrary("koin.compose").get())
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("touchlab.common").get())

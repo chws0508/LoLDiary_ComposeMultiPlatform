@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 compose = "1.6.0"
 agp = "8.2.0"
 androidx-appcompat = "1.6.1"
@@ -14,11 +14,11 @@ moko-mvvm = "0.16.1"
 ktor = "2.3.7"
 kotlinx-serialization = "1.6.2"
 koin = "3.5.3"
-koin-compose = "1.0.4"
+koin-compose = "1.1.2"
 sqlDelight = "2.0.1"
 kotest = "5.8"
 kotestPlugin = "5.8.0"
-composeCompiler = "1.5.4"
+composeCompiler = "1.5.8"
 tocuhlab = "2.0.6"
 # skydoves
 sandwich = "2.0.5"
@@ -28,9 +28,12 @@ sandwich = "2.0.5"
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+compose-ui = {module = "androidx.compose.ui:ui",version.ref = "compose"}
 
 ## navigation ##
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenModel = {module="cafe.adriel.voyager:voyager-screenmodel", version.ref="voyager"}
+voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
 ## imageLoader ##
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }

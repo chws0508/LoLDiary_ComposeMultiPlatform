@@ -16,6 +16,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.skydoves.sandwich)
             implementation(project(":core:network"))
+            implementation(project(":core:domain"))
         }
         iosMain.dependencies {
         }
