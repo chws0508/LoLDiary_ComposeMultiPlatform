@@ -23,11 +23,13 @@ tocuhlab = "2.0.6"
 # skydoves
 sandwich = "2.0.5"
 core = "1.12.0"
+coreSplashscreen = "1.0.1"
 
 [libraries]
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 compose-ui = {module = "androidx.compose.ui:ui",version.ref = "compose"}
 

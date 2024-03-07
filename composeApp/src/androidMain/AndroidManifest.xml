@@ -4,10 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@android:drawable/ic_popup_reminder"
         android:label="LoLDiary"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        android:theme="@style/Theme.LoLDiary">
         <activity
+            android:theme="@style/Theme.LoLDiary.Starting"
             android:name=".AppActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:launchMode="singleInstance"

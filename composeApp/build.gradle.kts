@@ -7,6 +7,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.androidx.core.splashscreen)
             implementation(project(":core:designsystem"))
             implementation(project(":core:network"))
             implementation(project(":core:data"))
