@@ -22,6 +22,7 @@ composeCompiler = "1.5.8"
 tocuhlab = "2.0.6"
 # skydoves
 sandwich = "2.0.5"
+core = "1.12.0"
 
 [libraries]
 
@@ -83,6 +84,7 @@ touchlab-common = { group = "co.touchlab", name = "stately-common", version.ref 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradlePlugin = {module = "org.jetbrains.compose:compose-gradle-plugin",version.ref="compose"}
+androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 
 [plugins]
 

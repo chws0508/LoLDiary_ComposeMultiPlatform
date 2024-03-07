@@ -1,4 +1,4 @@
-package com.woosuk.app.theme
+package com.woosuk.designsystem
 
 import android.app.Activity
 import android.graphics.Color

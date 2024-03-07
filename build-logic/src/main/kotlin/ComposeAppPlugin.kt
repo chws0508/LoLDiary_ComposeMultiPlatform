@@ -28,8 +28,6 @@ internal fun Project.configureComposeApp() {
             }
         }
 
-        jvm()
-
         configureSourceSets {
             all {
                 languageSettings {

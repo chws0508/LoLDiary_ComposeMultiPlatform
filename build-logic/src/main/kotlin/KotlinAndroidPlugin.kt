@@ -24,8 +24,6 @@ internal fun Project.configureKotlinAndroidPlugin() {
             }
         }
 
-        jvm()
-
         configureSourceSets {
             commonMain.dependencies {
                 implementation(compose.runtime)
