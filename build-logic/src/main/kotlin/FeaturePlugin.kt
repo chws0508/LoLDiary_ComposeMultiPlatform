@@ -5,7 +5,6 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureFeature() {
@@ -26,8 +25,6 @@ internal fun Project.configureFeature() {
             }
         }
 
-        jvm()
-
         configureSourceSets {
             all {
                 languageSettings {
@@ -41,6 +38,7 @@ internal fun Project.configureFeature() {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(project(":core:domain"))
+                implementation(project(":core:designsystem"))
 
                 implementation(libs.findLibrary("voyager.navigator").get())
                 implementation(libs.findLibrary("voyager.screenModel").get())

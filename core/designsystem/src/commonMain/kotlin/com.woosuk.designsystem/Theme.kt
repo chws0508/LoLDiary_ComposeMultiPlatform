@@ -15,6 +15,11 @@ val LocalCustomTypography =
         WoosukTypography()
     }
 
+val LocalCustomPadding =
+    staticCompositionLocalOf {
+        WoosukPadding()
+    }
+
 @Composable
 fun WoosukTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -29,6 +34,7 @@ fun WoosukTheme(
     CompositionLocalProvider(
         LocalCustomColors provides colorScheme,
         LocalCustomTypography provides WoosukTypography(),
+        LocalCustomPadding provides WoosukPadding(),
         content = content,
     )
 }
@@ -40,6 +46,9 @@ object WoosukTheme {
     val typography: WoosukTypography
         @Composable
         get() = LocalCustomTypography.current
+    val padding: WoosukPadding
+        @Composable
+        get() = LocalCustomPadding.current
 }
 
 @Composable

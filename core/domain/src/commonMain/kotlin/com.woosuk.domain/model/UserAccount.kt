@@ -1,7 +1,8 @@
 package com.woosuk.domain.model
 
 data class UserAccount(
-    val puUid: String,
-    val gameName: String,
-    val tagLine: String,
+    val puuid: String,
+    val nickName: String,
+    val tag: String,
+    val isCurrentUser: Boolean,
 )

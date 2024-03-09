@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 compose = "1.6.0"
 agp = "8.2.0"
 androidx-appcompat = "1.6.1"
@@ -9,9 +9,9 @@ compose-uitooling = "1.6.2"
 voyager = "1.0.0"
 composeImageLoader = "1.7.1"
 buildConfig = "5.3.5"
-kotlinx-coroutines = "1.7.3"
+kotlinx-coroutines = "1.8.0"
 moko-mvvm = "0.16.1"
-ktor = "2.3.7"
+ktor = "2.3.9"
 kotlinx-serialization = "1.6.2"
 koin = "3.5.3"
 koin-compose = "1.1.2"
@@ -19,13 +19,15 @@ sqlDelight = "2.0.1"
 kotest = "5.8"
 kotestPlugin = "5.8.0"
 composeCompiler = "1.5.8"
-tocuhlab = "2.0.6"
+tocuhlab = "2.0.5"
 # skydoves
 sandwich = "2.0.5"
 core = "1.12.0"
 coreSplashscreen = "1.0.1"
+sqliter = "1.3.1"
 
 [libraries]
+sqliter = { module = "co.touchlab:sqliter-driver", version.ref = "sqliter" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -50,6 +52,8 @@ kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
 
 ## ktor ##
+ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-jetty = {module="io.ktor:ktor-client-jetty",version.ref="ktor"}
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -69,6 +73,8 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-com
 sqlDelight-driver-sqlite = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
 sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqlDelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqlDelight-coroutine = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqlDelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
 sqlDelight-driver-js = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
 
 # kotlin test

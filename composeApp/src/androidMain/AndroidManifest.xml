@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".LoLDiaryApp"
         android:icon="@android:drawable/ic_popup_reminder"
         android:label="LoLDiary"
         android:theme="@style/Theme.LoLDiary">

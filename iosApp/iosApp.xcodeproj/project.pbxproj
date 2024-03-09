@@ -319,6 +319,7 @@
 					"${inherited}",
 					"-framework",
 					ComposeApp,
+					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.woosuk.app.iosApp;
 				PRODUCT_NAME = LoLDiary;
@@ -357,6 +358,7 @@
 					"${inherited}",
 					"-framework",
 					ComposeApp,
+					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.woosuk.app.iosApp;
 				PRODUCT_NAME = LoLDiary;

@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     includes(serviceModule)
-    single<UserRepository> { DefaultUserRepository(get()) }
+    single<UserRepository> { DefaultUserRepository(get(), get()) }
 }

@@ -2,6 +2,7 @@ rootProject.name = "LoLDiary"
 include(":composeApp")
 include(":core:domain")
 include(":core:network")
+include(":core:database")
 include(":core:data")
 include(":core:designsystem")
 include(":feature:onboarding")

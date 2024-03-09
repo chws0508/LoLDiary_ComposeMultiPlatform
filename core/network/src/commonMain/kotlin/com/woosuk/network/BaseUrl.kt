@@ -1,4 +1,4 @@
-package com.woosuk.network.service
+package com.woosuk.network
 
 internal enum class Server(val url: String) {
     KR("https://kr.api.riotgames.com/"),

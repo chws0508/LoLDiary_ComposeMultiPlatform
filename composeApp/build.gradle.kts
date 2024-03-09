@@ -13,6 +13,7 @@ kotlin {
             implementation(project(":core:data"))
             implementation(project(":core:domain"))
             implementation(project(":feature:onboarding"))
+            implementation(project(":core:database"))
         }
     }
 }
@@ -27,18 +28,3 @@ android {
         versionName = "1.0.0"
     }
 }
-
-//buildConfig {
-//    // BuildConfig configuration here.
-//    // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
-//}
-
-//sqldelight {
-//    databases {
-//        create("MyDatabase") {
-//            // Database configuration here.
-//            // https://cashapp.github.io/sqldelight
-//            packageName.set("com.woosuk.app.db")
-//        }
-//    }
-//}

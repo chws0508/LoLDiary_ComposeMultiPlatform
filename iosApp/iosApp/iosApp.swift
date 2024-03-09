@@ -4,6 +4,9 @@ import composeApp
 
 @main
 struct iosApp: App {
+    init(){
+        MainKt.doInitKoin()
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -13,7 +16,7 @@ struct iosApp: App {
 
 struct ContentView: View {
     var body: some View {
-        ComposeView().ignoresSafeArea(.all)
+        ComposeView()
     }
 }
 

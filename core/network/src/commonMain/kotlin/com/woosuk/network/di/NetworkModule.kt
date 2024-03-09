@@ -1,10 +1,11 @@
 package com.woosuk.network.di
 
 import LoLDiary.core.network.BuildConfig
+import com.woosuk.network.Server
 import com.woosuk.network.service.DefaultUserService
-import com.woosuk.network.service.Server
 import com.woosuk.network.service.UserService
 import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -17,8 +18,11 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
-import org.koin.dsl.bind
 import org.koin.dsl.module
+
+expect fun getClient(
+    action : HttpClientConfig<*>.()->Unit,
+): HttpClient
 
 val networkModule = module {
     single<Json> {
@@ -32,7 +36,7 @@ val networkModule = module {
     }
 
     single<HttpClient>(named("Kr")) {
-        HttpClient {
+        getClient {
             install(ContentNegotiation) {
                 json(
                     json = get(),
@@ -44,18 +48,15 @@ val networkModule = module {
                 level = LogLevel.ALL
             }
             defaultRequest {
-                host = Server.KR.url
-                header(
-                    "X-Riot-Token",
-                    BuildConfig.X_Riot_Token
-                )
+                url(Server.KR.url)
+                header("X-Riot-Token", BuildConfig.X_Riot_Token)
             }
             install(HttpTimeout) { requestTimeoutMillis = TIME_OUT }
         }
     }
 
     single<HttpClient>(named("Asia")) {
-        HttpClient {
+        getClient {
             install(ContentNegotiation) {
                 json(
                     json = get(),
@@ -67,11 +68,8 @@ val networkModule = module {
                 level = LogLevel.ALL
             }
             defaultRequest {
-                host = Server.ASIA.url
-                header(
-                    "X-Riot-Token",
-                    BuildConfig.X_Riot_Token
-                )
+                url(Server.ASIA.url)
+                header("X-Riot-Token", BuildConfig.X_Riot_Token)
             }
             install(HttpTimeout) { requestTimeoutMillis = TIME_OUT }
         }
@@ -80,7 +78,7 @@ val networkModule = module {
 
 val serviceModule = module {
     includes(networkModule)
-    single<UserService> { DefaultUserService(get(named("Kr"))) }
+    single<UserService> { DefaultUserService(get(named("Asia"))) }
 }
 
 private const val TIME_OUT = 3000L
