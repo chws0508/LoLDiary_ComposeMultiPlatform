@@ -78,7 +78,12 @@ val networkModule = module {
 
 val serviceModule = module {
     includes(networkModule)
-    single<UserService> { DefaultUserService(get(named("Asia"))) }
+    single<UserService> {
+        DefaultUserService(
+            get(named("Asia")),
+            get(named("Kr"))
+        )
+    }
 }
 
 private const val TIME_OUT = 3000L

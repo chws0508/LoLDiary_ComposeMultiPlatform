@@ -8,10 +8,10 @@ expect fun sqlDriverModule(): Module
 val databaseModule = module {
     includes(sqlDriverModule())
     single<LoLDiaryDatabase> { LoLDiaryDatabase(driver = get()) }
-    single<UserQueries> { UserQueries(get()) }
+    single<AccountQueries> { AccountQueries(get()) }
 }
 
 val dataSourceModule = module {
     includes(databaseModule)
-    single<UserDatabaseDataSource> { DefaultUserDatabaseResource(get()) }
+    single<AccountDatabaseDataSource> { DefaultAccountDatabaseResource(get()) }
 }

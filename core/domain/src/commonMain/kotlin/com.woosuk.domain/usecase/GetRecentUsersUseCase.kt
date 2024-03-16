@@ -1,9 +1,9 @@
 package com.woosuk.domain.usecase
 
-import com.woosuk.domain.repository.UserRepository
+import com.woosuk.domain.repository.AccountRepository
 
 class GetRecentUsersUseCase(
-    private val userRepository: UserRepository,
+    private val accountRepository: AccountRepository,
 ) {
-    operator fun invoke() = userRepository.getAllUser()
+    operator fun invoke() = accountRepository.getAllAccounts()
 }

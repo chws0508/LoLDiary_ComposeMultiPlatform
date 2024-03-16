@@ -39,10 +39,12 @@ internal fun Project.configureFeature() {
                 implementation(compose.components.resources)
                 implementation(project(":core:domain"))
                 implementation(project(":core:designsystem"))
+                implementation(project(":core:navigation"))
 
                 implementation(libs.findLibrary("voyager.navigator").get())
                 implementation(libs.findLibrary("voyager.screenModel").get())
                 implementation(libs.findLibrary("voyager.koin").get())
+                implementation(libs.findLibrary("voyager.tabNavigator").get())
                 implementation(libs.findLibrary("composeImageLoader").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("koin.core").get())
