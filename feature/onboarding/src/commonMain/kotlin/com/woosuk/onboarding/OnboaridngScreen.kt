@@ -2,6 +2,7 @@ package com.woosuk.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -24,45 +27,58 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.WoosukTheme
+import com.woosuk.domain.model.Account
 import com.woosuk.domain.model.LoginInfo
-import com.woosuk.domain.model.UserAccount
+import com.woosuk.navigation.SharedScreen
 
-class OnboardingScreen(
-    private val onShowSnackBar: (String) -> Unit,
-) : Screen {
+class OnboardingScreen() : Screen {
 
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
         val screenModel = getScreenModel<OnboardingScreenModel>()
         val loginInfo by screenModel.loginInfo.collectAsState()
         val recentLoginUsers by screenModel.recentLoginUsers.collectAsState()
-
-        OnboardingScreenContent(
-            loginInfo,
-            onLogin = screenModel::login,
-            onNicknameChanged = screenModel::onNicknameChanged,
-            onTagChanged = screenModel::onTagChanged,
-            recentLoginUsers = recentLoginUsers
-        )
+        val isLoading by screenModel.isLoading.collectAsState()
+        val snackBarController = LocalSnackbarController.current
+        val navigator = LocalNavigator.currentOrThrow
+        val tabScreen = rememberScreen(SharedScreen.TabScreen(LocalNavigator.currentOrThrow))
+        Box(modifier = Modifier.safeDrawingPadding()) {
+            OnboardingScreenContent(
+                loginInfo,
+                onLogin = screenModel::login,
+                onNicknameChanged = screenModel::onNicknameChanged,
+                onTagChanged = screenModel::onTagChanged,
+                recentLoginUsers = recentLoginUsers,
+                isLoading = isLoading
+            )
+        }
 
         LaunchedEffect(null) {
             screenModel.sideEffect.collect {
                 when (it) {
                     is OnBoardingSideEffect.LoginFail -> {
-                        onShowSnackBar(it.message)
+                        when (it.errorState.errorCode) {
+                            401 -> snackBarController.showMessage("잘못된 경로로 접속하고 있어요")
+                            403 -> snackBarController.showMessage("로그인 할 수 없어요. 관리자에게 문의해주세요")
+                            404 -> snackBarController.showMessage("존재하지 않는 닉네임 또는 태그입니다")
+                            else -> snackBarController.showMessage("네트워크를 확인해주세요")
+                        }
                     }
 
                     is OnBoardingSideEffect.LoginSuccess -> {
-                        onShowSnackBar("로그인 성공!")
+                        navigator.replace(tabScreen)
                     }
                 }
             }
@@ -73,11 +89,14 @@ class OnboardingScreen(
 @Composable
 internal fun OnboardingScreenContent(
     loginInfo: LoginInfo,
-    recentLoginUsers: List<UserAccount>,
+    recentLoginUsers: List<Account>,
     onLogin: (String, String) -> Unit = { _, _ -> },
     onNicknameChanged: (String) -> Unit = {},
     onTagChanged: (String) -> Unit = {},
+    isLoading: Boolean,
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+    val homeScreen = rememberScreen(SharedScreen.HomeTab)
     Column(
         modifier = Modifier.fillMaxSize().background(WoosukTheme.colors.Black0)
             .padding(WoosukTheme.padding.BasicHorizontalPadding)
@@ -183,6 +202,14 @@ internal fun OnboardingScreenContent(
                     }.padding(vertical = WoosukTheme.padding.BasicContentPadding)
                 )
             }
+        }
+    }
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize().background(Color.Transparent)) {
+            CircularProgressIndicator(
+                color = WoosukTheme.colors.Primary100,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }

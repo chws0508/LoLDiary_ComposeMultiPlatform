@@ -5,7 +5,9 @@ include(":core:network")
 include(":core:database")
 include(":core:data")
 include(":core:designsystem")
+include(":core:navigation")
 include(":feature:onboarding")
+include(":feature:home")
 
 pluginManagement {
     includeBuild("build-logic")

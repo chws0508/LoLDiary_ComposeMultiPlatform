@@ -1,0 +1,23 @@
+CREATE TABLE accountEntity (
+    puuid TEXT PRIMARY KEY NOT NULL,
+    summoner_id TEXT NOT NULL,
+    nick_name TEXT NOT NULL,
+    tag TEXT NOT NULL,
+    is_current_user INTEGER NOT NULL
+);
+
+selectAllAccounts:
+SELECT *
+FROM accountEntity
+;
+
+selectCurrentAccount:
+SELECT *
+FROM accountEntity
+WHERE is_current_user = ?
+;
+
+insertFullAccount:
+INSERT OR REPLACE INTO accountEntity(puuid, nick_name,tag,is_current_user,summoner_id)
+VALUES ?
+;

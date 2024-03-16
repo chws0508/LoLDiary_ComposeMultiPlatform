@@ -1,19 +1,19 @@
 package com.woosuk.domain.usecase
 
 import com.woosuk.domain.model.ErrorState
-import com.woosuk.domain.repository.UserRepository
+import com.woosuk.domain.repository.AccountRepository
 import kotlinx.coroutines.flow.onEach
 
 class LoginUseCase(
-    private val userRepository: UserRepository
+    private val accountRepository: AccountRepository
 ) {
     operator fun invoke(
-        gameName: String,
-        tagLine: String,
+        nickName: String,
+        tag: String,
         onError: suspend (ErrorState) -> Unit,
-    ) = userRepository.getUserAccount(
-        gameName = gameName,
-        tagLine = tagLine,
+    ) = accountRepository.getAccount(
+        nickName = nickName,
+        tag = tag,
         onError = onError
-    ).onEach { userRepository.saveUser(it.copy(isCurrentUser = true)) }
+    ).onEach { accountRepository.saveAccount(it.copy(isCurrentUser = true)) }
 }

@@ -12,7 +12,9 @@ kotlin {
             implementation(project(":core:network"))
             implementation(project(":core:data"))
             implementation(project(":core:domain"))
+            implementation(project(":core:navigation"))
             implementation(project(":feature:onboarding"))
+            implementation(project(":feature:home"))
             implementation(project(":core:database"))
         }
     }
