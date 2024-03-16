@@ -3,7 +3,7 @@ package com.woosuk.onboarding
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.woosuk.domain.model.LoginInfo
-import com.woosuk.domain.usecase.GetRecentUsersUseCase
+import com.woosuk.domain.usecase.GetRecentAccountsUseCase
 import com.woosuk.domain.usecase.LoginUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class OnboardingScreenModel(
     private val loginUseCase: LoginUseCase,
-    getRecentUsersUseCase: GetRecentUsersUseCase,
+    getRecentUsersUseCase: GetRecentAccountsUseCase,
 ) : ScreenModel {
 
     private val _sideEffect: Channel<OnBoardingSideEffect> = Channel()

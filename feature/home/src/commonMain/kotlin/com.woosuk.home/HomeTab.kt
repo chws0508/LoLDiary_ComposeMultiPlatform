@@ -2,26 +2,17 @@ package com.woosuk.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import cafe.adriel.voyager.core.registry.rememberScreen
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabNavigator
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import com.woosuk.designsystem.LocalShowBottomNaviController
-import com.woosuk.navigation.SharedScreen
 
 class HomeTab : Tab {
-
     override val options: TabOptions
         @Composable
         get() {
@@ -32,13 +23,20 @@ class HomeTab : Tab {
                 TabOptions(
                     index = 0u,
                     title = title,
-                    icon = icon
+                    icon = icon,
                 )
             }
         }
 
     @Composable
     override fun Content() {
-        Text("홈 입니다")
+        val homeScreenModel = getScreenModel<HomeScreenModel>()
+        val userUiState = homeScreenModel.userUiState.collectAsState().value
+
+        when (userUiState) {
+            UserUiState.Fail -> Text("불러오는데에 실패하였어요")
+            UserUiState.Loading -> CircularProgressIndicator()
+            is UserUiState.Success -> Text(userUiState.user.toString())
+        }
     }
 }

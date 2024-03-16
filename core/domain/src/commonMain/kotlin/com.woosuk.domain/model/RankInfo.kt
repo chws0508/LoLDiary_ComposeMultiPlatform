@@ -11,8 +11,8 @@ data class RankInfo(
     }
 }
 
-enum class QueueType(value: String) {
-    SOLO_RANK("RANKED_SOLO_5x5")
+enum class QueueType(val value: String) {
+    SOLO_RANK("RANKED_SOLO_5x5"),
 }
 
 data class RankTier(
@@ -22,9 +22,38 @@ data class RankTier(
 )
 
 enum class RankTierType {
-    IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND, MASTER, GRANDMASTER, CHALLENGER
+    IRON,
+    BRONZE,
+    SILVER,
+    GOLD,
+    PLATINUM,
+    DIAMOND,
+    MASTER,
+    GRANDMASTER,
+    CHALLENGER,
+    ;
+
+    companion object {
+        fun find(value: String): RankTierType = entries.find { it.name == value } ?: throw IllegalStateException("알 수 없는 티어가 나왔어요")
+    }
 }
 
 enum class RankTierStep(val value: Int) {
-    ONE(1), TWO(2), THREE(3), FOUR(4), NONE(0)
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    NONE(0),
+    ;
+
+    companion object {
+        fun find(value: String) =
+            when (value) {
+                "I" -> ONE
+                "II" -> TWO
+                "III" -> THREE
+                "IV" -> FOUR
+                else -> NONE
+            }
+    }
 }

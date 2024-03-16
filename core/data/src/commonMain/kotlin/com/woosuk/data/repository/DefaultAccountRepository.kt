@@ -5,13 +5,13 @@ import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.suspendMapSuccess
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
-import com.woosuk.data.mapper.toDomain
-import com.woosuk.data.mapper.toEntity
+import com.woosuk.data.mapper.toAccount
+import com.woosuk.data.mapper.toAccountEntity
 import com.woosuk.database.AccountDatabaseDataSource
 import com.woosuk.domain.model.Account
 import com.woosuk.domain.model.ErrorState
 import com.woosuk.domain.repository.AccountRepository
-import com.woosuk.network.service.UserService
+import com.woosuk.network.service.AccountService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 class DefaultAccountRepository(
-    private val userService: UserService,
+    private val accountService: AccountService,
     private val userDatabaseDataSource: AccountDatabaseDataSource
 ) : AccountRepository {
 
@@ -30,7 +30,7 @@ class DefaultAccountRepository(
         onError: suspend (ErrorState) -> Unit
     ): Flow<Account> = flow {
         getPuuid(nickName, tag, onError).collect { puuid ->
-            userService.getSummoner(puuid).suspendMapSuccess {
+            accountService.getSummoner(puuid).suspendMapSuccess {
                 emit(
                     Account(
                         puuid = puuid,
@@ -50,13 +50,13 @@ class DefaultAccountRepository(
 
     override fun getAllAccounts(): Flow<List<Account>> =
         userDatabaseDataSource.getAllAccounts()
-            .map { entities -> entities.map { it.toDomain() } }
+            .map { entities -> entities.map { it.toAccount() } }
 
     override suspend fun getCurrentAccount(): Account? =
-        userDatabaseDataSource.getCurrentAccount()?.toDomain()
+        userDatabaseDataSource.getCurrentAccount()?.toAccount()
 
     override suspend fun saveAccount(account: Account) {
-        userDatabaseDataSource.insertAccount(account.toEntity(true))
+        userDatabaseDataSource.insertAccount(account.toAccountEntity(true))
     }
 
     private fun getPuuid(
@@ -64,7 +64,7 @@ class DefaultAccountRepository(
         tag: String,
         onError: suspend (ErrorState) -> Unit
     ) = flow {
-        userService.getAccount(nickName, tag).suspendMapSuccess {
+        accountService.getPuuid(nickName, tag).suspendMapSuccess {
             emit(puuid)
         }.suspendOnError {
             onError(ErrorState(statusCode.code, messageOrNull))

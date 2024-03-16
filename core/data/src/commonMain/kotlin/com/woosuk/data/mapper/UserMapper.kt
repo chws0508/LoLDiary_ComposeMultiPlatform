@@ -1,21 +1,25 @@
 package com.woosuk.data.mapper
 
-import com.woosuk.database.AccountEntity
-import com.woosuk.domain.model.Account
+import com.woosuk.domain.model.QueueType
+import com.woosuk.domain.model.RankInfo
+import com.woosuk.domain.model.RankTier
+import com.woosuk.domain.model.RankTierStep
+import com.woosuk.domain.model.RankTierType
+import com.woosuk.network.model.RankInfoDto
 
-
-fun AccountEntity.toDomain() = Account(
-    puuid = puuid,
-    nickName = nick_name,
-    tag = tag,
-    summonerId = summoner_id,
-    isCurrentUser = if (is_current_user == 1L) true else false
-)
-
-fun Account.toEntity(isCurrentUser: Boolean) = AccountEntity(
-    puuid = puuid,
-    summoner_id = summonerId,
-    nick_name = nickName,
-    tag = tag,
-    is_current_user = if (isCurrentUser) 1L else -1L
-)
+fun RankInfoDto.toRankInfo() =
+    RankInfo(
+        queueType =
+            when (queueType) {
+                QueueType.SOLO_RANK.value -> QueueType.SOLO_RANK
+                else -> QueueType.SOLO_RANK
+            },
+        rankTier =
+            RankTier(
+                type = RankTierType.find(tier),
+                step = RankTierStep.find(rank),
+                point = leaguePoints,
+            ),
+        winCount = wins,
+        loseCount = losses,
+    )

@@ -1,9 +1,14 @@
 package com.woosuk.domain.usecase
 
-import com.woosuk.domain.repository.AccountRepository
+import com.woosuk.domain.model.ErrorState
+import com.woosuk.domain.model.User
+import com.woosuk.domain.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 
 class GetCurrentUserUseCase(
-    private val accountRepository: AccountRepository
+    private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke() = accountRepository.getCurrentAccount()
+    operator fun invoke(onError: (ErrorState) -> Unit): Flow<User> {
+        return userRepository.getCurrentUser(onError = onError)
+    }
 }

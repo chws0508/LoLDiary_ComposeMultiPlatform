@@ -35,7 +35,7 @@ internal fun App() {
         ) {
             Navigator(
                 MainScreen(),
-                onBackPressed = {false}
+                onBackPressed = { false },
             ) {
                 CurrentScreen()
             }
@@ -64,7 +64,7 @@ val screenModelModule =
     module {
         factory { OnboardingScreenModel(get(), get()) }
         factory { MainScreenModel(get()) }
-        factory { HomeScreenModel() }
+        factory { HomeScreenModel(get()) }
     }
 
 val sharedModules =
