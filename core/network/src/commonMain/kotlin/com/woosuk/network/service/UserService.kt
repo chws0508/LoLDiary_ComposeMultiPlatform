@@ -38,7 +38,6 @@ class DefaultUserService(
             }
         }
 
-
     override suspend fun getSummoner(
         puuid: String
     ): ApiResponse<SummonerDto> = krHttpClient.getApiResponse<SummonerDto>(

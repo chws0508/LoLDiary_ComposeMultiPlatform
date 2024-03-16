@@ -52,7 +52,7 @@ class DefaultAccountRepository(
         userDatabaseDataSource.getAllAccounts()
             .map { entities -> entities.map { it.toDomain() } }
 
-    override suspend fun getCurrentAccounts(): Account? =
+    override suspend fun getCurrentAccount(): Account? =
         userDatabaseDataSource.getCurrentAccount()?.toDomain()
 
     override suspend fun saveAccount(account: Account) {

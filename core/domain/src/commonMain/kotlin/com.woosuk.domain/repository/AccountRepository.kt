@@ -12,7 +12,7 @@ interface AccountRepository {
         onError: suspend (ErrorState) -> Unit
     ): Flow<Account>
 
-    suspend fun getCurrentAccounts(): Account?
+    suspend fun getCurrentAccount(): Account?
 
     suspend fun saveAccount(account: Account)
 

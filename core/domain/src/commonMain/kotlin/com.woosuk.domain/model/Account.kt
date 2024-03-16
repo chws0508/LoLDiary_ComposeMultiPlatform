@@ -6,4 +6,6 @@ data class Account(
     val nickName: String,
     val tag: String,
     val isCurrentUser: Boolean,
-)
+) {
+    override fun toString(): String = nickName + tag
+}
