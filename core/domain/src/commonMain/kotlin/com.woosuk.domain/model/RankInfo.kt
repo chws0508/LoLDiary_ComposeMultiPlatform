@@ -27,6 +27,7 @@ enum class RankTierType {
     SILVER,
     GOLD,
     PLATINUM,
+    EMERALD,
     DIAMOND,
     MASTER,
     GRANDMASTER,
@@ -34,7 +35,7 @@ enum class RankTierType {
     ;
 
     companion object {
-        fun find(value: String): RankTierType = entries.find { it.name == value } ?: throw IllegalStateException("알 수 없는 티어가 나왔어요")
+        fun from(value: String): RankTierType = entries.find { it.name == value } ?: throw IllegalStateException("알 수 없는 티어가 나왔어요")
     }
 }
 
@@ -47,7 +48,7 @@ enum class RankTierStep(val value: Int) {
     ;
 
     companion object {
-        fun find(value: String) =
+        fun from(value: String) =
             when (value) {
                 "I" -> ONE
                 "II" -> TWO

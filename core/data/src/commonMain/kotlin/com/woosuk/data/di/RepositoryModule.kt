@@ -11,5 +11,5 @@ val repositoryModule =
     module {
         includes(serviceModule)
         single<AccountRepository> { DefaultAccountRepository(get(), get()) }
-        single<UserRepository> { DefaultUserRepository(get(), get()) }
+        single<UserRepository> { DefaultUserRepository(get(), get(), get()) }
     }

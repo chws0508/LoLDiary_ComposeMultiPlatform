@@ -1,12 +1,10 @@
-package com.woosuk.designsystem
+package com.woosuk.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
-import kotlinx.coroutines.CoroutineScope
+import com.woosuk.designsystem.SystemAppearance
 
 val LocalCustomColors =
     staticCompositionLocalOf {
@@ -53,6 +51,3 @@ object WoosukTheme {
         @Composable
         get() = LocalCustomPadding.current
 }
-
-@Composable
-internal expect fun SystemAppearance(isDark: Boolean)

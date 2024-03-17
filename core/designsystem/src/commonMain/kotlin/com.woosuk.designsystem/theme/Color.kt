@@ -1,4 +1,4 @@
-package com.woosuk.designsystem
+package com.woosuk.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -32,7 +32,6 @@ data class WoosukColor(
     val Primary60: Color = primary60,
     val Primary40: Color = primary40,
     val Primary20: Color = primary20,
-
     val Secondary100: Color = secondary100,
     val Secondary80: Color = secondary80,
     val Secondary60: Color = secondary60,
@@ -44,7 +43,6 @@ data class WoosukColor(
     val Black40: Color = black40,
     val Black20: Color = black20,
     val Black0: Color = black0,
-
     val Success: Color = success,
     val Error: Color = error,
     val Warning: Color = warning,

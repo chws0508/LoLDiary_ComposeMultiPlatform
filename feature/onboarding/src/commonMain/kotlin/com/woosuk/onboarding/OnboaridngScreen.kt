@@ -38,13 +38,12 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.woosuk.designsystem.LocalSnackbarController
-import com.woosuk.designsystem.WoosukTheme
+import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.Account
 import com.woosuk.domain.model.LoginInfo
 import com.woosuk.navigation.SharedScreen
 
 class OnboardingScreen() : Screen {
-
     @Composable
     override fun Content() {
         val screenModel = getScreenModel<OnboardingScreenModel>()
@@ -61,7 +60,7 @@ class OnboardingScreen() : Screen {
                 onNicknameChanged = screenModel::onNicknameChanged,
                 onTagChanged = screenModel::onTagChanged,
                 recentLoginUsers = recentLoginUsers,
-                isLoading = isLoading
+                isLoading = isLoading,
             )
         }
 
@@ -98,20 +97,21 @@ internal fun OnboardingScreenContent(
     val navigator = LocalNavigator.currentOrThrow
     val homeScreen = rememberScreen(SharedScreen.HomeTab)
     Column(
-        modifier = Modifier.fillMaxSize().background(WoosukTheme.colors.Black0)
-            .padding(WoosukTheme.padding.BasicHorizontalPadding)
+        modifier =
+            Modifier.fillMaxSize().background(WoosukTheme.colors.Black0)
+                .padding(WoosukTheme.padding.BasicHorizontalPadding),
     ) {
         Text(
             "나의 계정을 등록하세요",
             style = WoosukTheme.typography.heading5,
-            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding)
+            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             "닉네임",
             style = WoosukTheme.typography.bodyLargeMedium,
-            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding)
+            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding),
         )
 
         OutlinedTextField(
@@ -120,16 +120,17 @@ internal fun OnboardingScreenContent(
                 Text(
                     "닉네임을 입력해주세요",
                     style = WoosukTheme.typography.bodyLargeRegular,
-                    color = WoosukTheme.colors.Black40
+                    color = WoosukTheme.colors.Black40,
                 )
             },
             onValueChange = onNicknameChanged,
             textStyle = WoosukTheme.typography.bodyLargeRegular,
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = WoosukTheme.colors.Primary100,
-                unfocusedBorderColor = WoosukTheme.colors.Black40
-            ),
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = WoosukTheme.colors.Primary100,
+                    unfocusedBorderColor = WoosukTheme.colors.Black40,
+                ),
             singleLine = true,
         )
 
@@ -138,7 +139,7 @@ internal fun OnboardingScreenContent(
         Text(
             "태그",
             style = WoosukTheme.typography.bodyLargeMedium,
-            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding)
+            modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding),
         )
 
         OutlinedTextField(
@@ -147,18 +148,19 @@ internal fun OnboardingScreenContent(
                 Text(
                     "KR1",
                     style = WoosukTheme.typography.bodyLargeRegular,
-                    color = WoosukTheme.colors.Black40
+                    color = WoosukTheme.colors.Black40,
                 )
             },
             onValueChange = onTagChanged,
             modifier = Modifier.fillMaxWidth(),
             textStyle = WoosukTheme.typography.bodyLargeRegular,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = WoosukTheme.colors.Primary100,
-                unfocusedBorderColor = WoosukTheme.colors.Black40
-            ),
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = WoosukTheme.colors.Primary100,
+                    unfocusedBorderColor = WoosukTheme.colors.Black40,
+                ),
             leadingIcon = { Icon(imageVector = Icons.Filled.Tag, contentDescription = null) },
-            singleLine = true
+            singleLine = true,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -169,37 +171,39 @@ internal fun OnboardingScreenContent(
                 onLogin(loginInfo.nickName, loginInfo.tag)
             },
             enabled = loginInfo.canLogin,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = WoosukTheme.colors.Primary100,
-                disabledContainerColor = WoosukTheme.colors.Black20
-            ),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = WoosukTheme.colors.Primary100,
+                    disabledContainerColor = WoosukTheme.colors.Black20,
+                ),
             shape = RoundedCornerShape(10.dp),
-            contentPadding = PaddingValues(20.dp)
+            contentPadding = PaddingValues(20.dp),
         ) {
             Text(
                 "로그인",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                style = WoosukTheme.typography.bodyLargeMedium
+                style = WoosukTheme.typography.bodyLargeMedium,
             )
         }
 
         Text(
             "로그인 기록",
             style = WoosukTheme.typography.heading5,
-            modifier = Modifier.padding(vertical = WoosukTheme.padding.LargeVerticalPadding)
+            modifier = Modifier.padding(vertical = WoosukTheme.padding.LargeVerticalPadding),
         )
 
         LazyColumn {
             items(
-                items = recentLoginUsers
+                items = recentLoginUsers,
             ) { user ->
                 Text(
                     text = user.nickName + "#${user.tag}",
                     style = WoosukTheme.typography.bodyLargeRegular,
-                    modifier = Modifier.clickable {
-                        onLogin(user.nickName, user.tag)
-                    }.padding(vertical = WoosukTheme.padding.BasicContentPadding)
+                    modifier =
+                        Modifier.clickable {
+                            onLogin(user.nickName, user.tag)
+                        }.padding(vertical = WoosukTheme.padding.BasicContentPadding),
                 )
             }
         }
@@ -208,7 +212,7 @@ internal fun OnboardingScreenContent(
         Box(modifier = Modifier.fillMaxSize().background(Color.Transparent)) {
             CircularProgressIndicator(
                 color = WoosukTheme.colors.Primary100,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center),
             )
         }
     }

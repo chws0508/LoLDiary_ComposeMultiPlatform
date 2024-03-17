@@ -19,6 +19,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.woosuk.designsystem.LocalSnackbarController
+import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
 import com.woosuk.navigation.SharedScreen
@@ -37,26 +38,33 @@ class TabScreen : Screen {
                         TabNavigationItem(HomeTab(), rootNavigator)
                         TabNavigationItem(
                             SettingsTab { rootNavigator.replace(onboardingScreen) },
-                            rootNavigator
+                            rootNavigator,
                         )
                     }
                 },
-                content = { CurrentTab() }
+                content = { CurrentTab() },
+                containerColor = WoosukTheme.colors.Black0,
             )
         }
     }
 }
 
 @Composable
-expect fun BackPressHandler(tabNavigator: TabNavigator, rootNavigator: Navigator)
+expect fun BackPressHandler(
+    tabNavigator: TabNavigator,
+    rootNavigator: Navigator,
+)
 
 @Composable
-private fun RowScope.TabNavigationItem(tab: Tab, rootNavigator: Navigator) {
+private fun RowScope.TabNavigationItem(
+    tab: Tab,
+    rootNavigator: Navigator,
+) {
     val tabNavigator = LocalTabNavigator.current
     BackPressHandler(tabNavigator, rootNavigator)
     NavigationBarItem(
         selected = tabNavigator.current == tab,
         onClick = { tabNavigator.current = tab },
-        icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) }
+        icon = { Icon(painter = tab.options.icon!!, contentDescription = tab.options.title) },
     )
 }

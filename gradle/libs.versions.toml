@@ -11,6 +11,7 @@ composeImageLoader = "1.7.1"
 buildConfig = "5.3.5"
 kotlinx-coroutines = "1.8.0"
 moko-mvvm = "0.16.1"
+moko-resources = "0.23.0"
 ktor = "2.3.9"
 kotlinx-serialization = "1.6.2"
 koin = "3.5.3"
@@ -25,6 +26,8 @@ sandwich = "2.0.5"
 core = "1.12.0"
 coreSplashscreen = "1.0.1"
 sqliter = "1.3.1"
+coil = "3.0.0-alpha01"
+kamel = "0.9.3"
 
 [libraries]
 sqliter = { module = "co.touchlab:sqliter-driver", version.ref = "sqliter" }
@@ -41,8 +44,11 @@ voyager-screenModel = {module="cafe.adriel.voyager:voyager-screenmodel", version
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 
-## imageLoader ##
+## ComposeImageLoader ##
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
+
+## Kamel ##
+kamel = {module = "media.kamel:kamel-image",version.ref = "kamel"}
 
 ## coroutine ##
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -51,16 +57,21 @@ kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 
 ## moko ##
 moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
+moko-resources-generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "moko-resources" }
+moko-resource = { group = "dev.icerock.moko", name = "resources", version.ref = "moko-resources" }
+moko-resource-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko-resources" }
 
 ## ktor ##
-ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-ktor-jetty = {module="io.ktor:ktor-client-jetty",version.ref="ktor"}
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+
+ktor-engine-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-engine-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
+ktor-engine-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 
 ## kotlinx-serilization ##
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
@@ -89,11 +100,18 @@ touchlab-concurrency = { group = "co.touchlab", name = "stately-concurrency", ve
 touchlab-strict = { group = "co.touchlab", name = "stately-strict", version.ref = "tocuhlab" }
 touchlab-common = { group = "co.touchlab", name = "stately-common", version.ref = "tocuhlab" }
 
+# Coil
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network = { module = "io.coil-kt.coil3:coil-network", version.ref = "coil" }
+
 ## plugins
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradlePlugin = {module = "org.jetbrains.compose:compose-gradle-plugin",version.ref="compose"}
 androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
+
+[bundles]
+moko-resources = ["moko-resource", "moko-resource-compose"]
 
 [plugins]
 

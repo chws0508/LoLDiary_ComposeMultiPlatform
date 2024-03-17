@@ -13,7 +13,7 @@ import com.woosuk.database.dataSourceModule
 import com.woosuk.database.databaseModule
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.SnackBarController
-import com.woosuk.designsystem.WoosukTheme
+import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.di.useCaseModule
 import com.woosuk.home.HomeScreenModel
 import com.woosuk.home.HomeTab

@@ -5,6 +5,7 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureFeature() {
@@ -13,9 +14,9 @@ internal fun Project.configureFeature() {
         apply("org.jetbrains.compose")
     }
     configureAndroidPlugin()
+
     extensions.configure<KotlinMultiplatformExtension> {
         applyDefaultHierarchyTemplate()
-
 
         androidTarget {
             compilations.all {
@@ -40,12 +41,13 @@ internal fun Project.configureFeature() {
                 implementation(project(":core:domain"))
                 implementation(project(":core:designsystem"))
                 implementation(project(":core:navigation"))
+                implementation(project(":core:ui"))
 
                 implementation(libs.findLibrary("voyager.navigator").get())
                 implementation(libs.findLibrary("voyager.screenModel").get())
                 implementation(libs.findLibrary("voyager.koin").get())
                 implementation(libs.findLibrary("voyager.tabNavigator").get())
-                implementation(libs.findLibrary("composeImageLoader").get())
+                implementation(libs.findLibrary("kamel").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("koin.compose").get())
@@ -55,8 +57,14 @@ internal fun Project.configureFeature() {
             commonTest.dependencies {
                 implementation(libs.findLibrary("kotlin.test").get())
             }
-
+            androidMain {
+                dependsOn(commonMain.get())
+            }
+            iosMain {
+                dependsOn(commonMain.get())
+            }
             androidMain.dependencies {
+                implementation(libs.findLibrary("ktor.client.okhttp").get())
                 implementation(libs.findLibrary("koin.android").get())
                 implementation(libs.findLibrary("androidx.appcompat").get())
                 implementation(libs.findLibrary("compose.uitooling").get())
@@ -64,6 +72,7 @@ internal fun Project.configureFeature() {
             }
 
             iosMain.dependencies {
+                implementation(libs.findLibrary("ktor.client.darwin").get())
             }
         }
     }

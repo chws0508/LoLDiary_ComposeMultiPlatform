@@ -1,12 +1,10 @@
 import extensions.compose
-import extensions.configureAndroidPlugin
 import extensions.configureApplicationPlugin
 import extensions.configureSourceSets
 import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureComposeApp() {
@@ -18,7 +16,6 @@ internal fun Project.configureComposeApp() {
 
     extensions.configure<KotlinMultiplatformExtension> {
         applyDefaultHierarchyTemplate()
-
 
         androidTarget {
             compilations.all {
@@ -60,6 +57,12 @@ internal fun Project.configureComposeApp() {
                 implementation(libs.findLibrary("androidx.appcompat").get())
                 implementation(libs.findLibrary("compose.uitooling").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.android").get())
+            }
+            androidMain {
+                dependsOn(commonMain.get())
+            }
+            iosMain {
+                dependsOn(commonMain.get())
             }
 
             iosMain.dependencies {

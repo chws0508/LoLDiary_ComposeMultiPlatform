@@ -1,7 +1,12 @@
 import extensions.configureIos
 
-plugins { id("convention.composeApp") }
-
+plugins {
+    id("convention.composeApp")
+    id("dev.icerock.mobile.multiplatform-resources")
+}
+dependencies {
+    commonMainApi(libs.bundles.moko.resources)
+}
 kotlin {
     configureIos(baseName = "composeApp")
 
@@ -29,4 +34,7 @@ android {
         versionCode = 1
         versionName = "1.0.0"
     }
+}
+multiplatformResources {
+    multiplatformResourcesPackage = "com.woosuk.app"
 }

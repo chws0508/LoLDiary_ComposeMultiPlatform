@@ -16,8 +16,8 @@ fun RankInfoDto.toRankInfo() =
             },
         rankTier =
             RankTier(
-                type = RankTierType.find(tier),
-                step = RankTierStep.find(rank),
+                type = RankTierType.from(tier),
+                step = RankTierStep.from(rank),
                 point = leaguePoints,
             ),
         winCount = wins,

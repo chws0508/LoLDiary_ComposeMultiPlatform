@@ -5,7 +5,6 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureKotlinAndroidPlugin() {
@@ -15,7 +14,7 @@ internal fun Project.configureKotlinAndroidPlugin() {
     }
     configureAndroidPlugin()
     extensions.configure<KotlinMultiplatformExtension> {
-
+        applyDefaultHierarchyTemplate()
         androidTarget {
             compilations.all {
                 kotlinOptions {
@@ -35,6 +34,12 @@ internal fun Project.configureKotlinAndroidPlugin() {
             commonTest.dependencies {
                 implementation(libs.findLibrary("kotlin.test").get())
             }
+            androidMain {
+                dependsOn(commonMain.get())
+            }
+            iosMain {
+                dependsOn(commonMain.get())
+            }
         }
     }
 }
@@ -46,4 +51,3 @@ class KotlinAndroidPlugin : Plugin<Project> {
         }
     }
 }
-
