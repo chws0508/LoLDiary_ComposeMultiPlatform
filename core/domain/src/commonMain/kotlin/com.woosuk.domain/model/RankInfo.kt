@@ -11,10 +11,6 @@ data class RankInfo(
     }
 }
 
-enum class QueueType(val value: String) {
-    SOLO_RANK("RANKED_SOLO_5x5"),
-}
-
 data class RankTier(
     val type: RankTierType,
     val step: RankTierStep,
