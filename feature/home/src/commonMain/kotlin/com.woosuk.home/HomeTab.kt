@@ -29,6 +29,7 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.ui.toRelativeString
 
 class HomeTab : Tab {
     override val options: TabOptions
@@ -110,7 +111,7 @@ fun HomeScreenContent(
                             Text("${matchInfo.account.nickName}")
                             Text("${matchInfo.gameInfo.queueType}")
                             Text("${matchInfo.champion.name}")
-                            Text("${matchInfo.gameInfo.endAt.date}")
+                            Text("${matchInfo.gameInfo.endAt.toRelativeString()}")
                             Text("${matchInfo.gameInfo.isWin}")
                         }
                     }

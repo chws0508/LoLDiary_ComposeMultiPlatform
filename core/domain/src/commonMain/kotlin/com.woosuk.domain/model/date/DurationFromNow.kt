@@ -26,36 +26,35 @@ sealed class DurationFromNow(
     val minutes = value.minutes
     val hours = value.hours
     val days = value.days
-    val years = value.days / DAYS_FOR_YEAR
+    val years = value.years
 
     companion object {
         fun from(date: LocalDateTime): DurationFromNow {
             val dateTimePeriod =
-                Clock.System.now().periodUntil(
-                    date.toInstant(TimeZone.currentSystemDefault()),
+                date.toInstant(TimeZone.currentSystemDefault()).periodUntil(
+                    Clock.System.now(),
                     TimeZone.currentSystemDefault(),
                 )
             return when {
-                dateTimePeriod.isLessThanOneMinute() -> LessThanOneMinute(dateTimePeriod)
-                dateTimePeriod.isLessThanOneHour() -> OneMinuteToOneHour(dateTimePeriod)
-                dateTimePeriod.isLessThanOneDay() -> OneHourToOneDay(dateTimePeriod)
-                dateTimePeriod.isLessThanWeekDays() -> OneDayToSevenDay(dateTimePeriod)
-                dateTimePeriod.isLessOneYear() -> SevenDayToOneYear(dateTimePeriod)
-                else -> OverOneYear(dateTimePeriod)
+                dateTimePeriod.isOverOneYear() -> OverOneYear(dateTimePeriod)
+                dateTimePeriod.isOverWeekDays() -> SevenDayToOneYear(dateTimePeriod)
+                dateTimePeriod.isOverOneDay() -> OneDayToSevenDay(dateTimePeriod)
+                dateTimePeriod.isOverOneHour() -> OneHourToOneDay(dateTimePeriod)
+                dateTimePeriod.isOverOneMinute() -> OneMinuteToOneHour(dateTimePeriod)
+                else -> LessThanOneMinute(dateTimePeriod)
             }
         }
 
-        private fun DateTimePeriod.isLessThanOneMinute() = minutes < 1
+        private fun DateTimePeriod.isOverOneMinute() = minutes >= 1
 
-        private fun DateTimePeriod.isLessThanOneHour() = hours < 1
+        private fun DateTimePeriod.isOverOneHour() = hours >= 1
 
-        private fun DateTimePeriod.isLessThanOneDay() = days < 1
+        private fun DateTimePeriod.isOverOneDay() = days >= 1
 
-        private fun DateTimePeriod.isLessThanWeekDays() = days < DAYS_FOR_WEEK
+        private fun DateTimePeriod.isOverWeekDays() = days >= DAYS_FOR_WEEK
 
-        private fun DateTimePeriod.isLessOneYear() = days < DAYS_FOR_YEAR
+        private fun DateTimePeriod.isOverOneYear() = years >= 1
 
-        private const val DAYS_FOR_YEAR = 365
         private const val DAYS_FOR_WEEK = 7
     }
 }
