@@ -48,10 +48,12 @@ internal fun Project.configureFeature() {
                 implementation(libs.findLibrary("voyager.koin").get())
                 implementation(libs.findLibrary("voyager.tabNavigator").get())
                 implementation(libs.findLibrary("kamel").get())
+                implementation(libs.findLibrary("kotlinx.datetime").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("koin.compose").get())
                 implementation(libs.findLibrary("touchlab.common").get())
+                implementation(libs.findLibrary("napier").get())
             }
 
             commonTest.dependencies {

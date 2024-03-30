@@ -4,8 +4,11 @@ import LoLDiary.core.network.BuildConfig
 import com.woosuk.network.Server
 import com.woosuk.network.service.AccountService
 import com.woosuk.network.service.DefaultAccountService
+import com.woosuk.network.service.DefaultMatchService
 import com.woosuk.network.service.DefaultUserService
+import com.woosuk.network.service.MatchService
 import com.woosuk.network.service.UserService
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
@@ -45,8 +48,13 @@ val networkModule =
                     )
                 }
                 install(Logging) {
-                    logger = Logger.DEFAULT
                     level = LogLevel.ALL
+                    logger =
+                        object : Logger {
+                            override fun log(message: String) {
+                                Napier.i(message)
+                            }
+                        }
                 }
                 defaultRequest {
                     url(Server.KR.url)
@@ -89,6 +97,11 @@ val serviceModule =
         single<UserService> {
             DefaultUserService(
                 get(named("Kr")),
+            )
+        }
+        single<MatchService> {
+            DefaultMatchService(
+                get(named("Asia")),
             )
         }
     }

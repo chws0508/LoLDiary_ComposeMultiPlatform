@@ -32,8 +32,8 @@ sealed class DurationFromNow(
         fun from(date: LocalDateTime): DurationFromNow {
             val dateTimePeriod =
                 Clock.System.now().periodUntil(
-                    date.toInstant(TimeZone.UTC),
-                    TimeZone.UTC,
+                    date.toInstant(TimeZone.currentSystemDefault()),
+                    TimeZone.currentSystemDefault(),
                 )
             return when {
                 dateTimePeriod.isLessThanOneMinute() -> LessThanOneMinute(dateTimePeriod)

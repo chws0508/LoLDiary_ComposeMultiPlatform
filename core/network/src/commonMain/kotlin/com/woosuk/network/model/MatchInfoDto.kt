@@ -3,7 +3,7 @@ package com.woosuk.network.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MatchDto(
+data class MatchInfoDto(
     val metadata: MetaDataDto,
     val info: InfoDto,
 )
@@ -24,13 +24,13 @@ data class InfoDto(
     val gameStartTimestamp: Long,
     val participants: List<ParticipantDto>,
     val queueId: Int,
+    val teams: List<TeamDto>,
 )
 
 @Serializable
 data class TeamDto(
     val win: Boolean,
     val teamId: Int,
-    val participants: List<ParticipantDto>,
 )
 
 @Serializable
@@ -56,5 +56,4 @@ data class ParticipantDto(
     val summoner1Id: Int,
     val summoner2Id: Int,
     val win: Boolean,
-    val teams: TeamDto,
 )

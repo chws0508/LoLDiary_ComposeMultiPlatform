@@ -23,10 +23,13 @@ import com.woosuk.network.di.networkModule
 import com.woosuk.network.di.serviceModule
 import com.woosuk.onboarding.OnboardingScreen
 import com.woosuk.onboarding.OnboardingScreenModel
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.dsl.module
 
 @Composable
 internal fun App() {
+    Napier.base(DebugAntilog())
     WoosukTheme {
         val snackbarHostState = remember { SnackbarHostState() }
         val coroutine = rememberCoroutineScope()
@@ -64,7 +67,7 @@ val screenModelModule =
     module {
         factory { OnboardingScreenModel(get(), get()) }
         factory { MainScreenModel(get()) }
-        factory { HomeScreenModel(get()) }
+        factory { HomeScreenModel(get(), get()) }
     }
 
 val sharedModules =

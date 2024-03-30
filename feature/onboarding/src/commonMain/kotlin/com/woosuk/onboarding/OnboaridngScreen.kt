@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +21,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +43,7 @@ import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.Account
 import com.woosuk.domain.model.LoginInfo
 import com.woosuk.navigation.SharedScreen
+import kotlinx.coroutines.flow.collectLatest
 
 class OnboardingScreen() : Screen {
     @Composable
@@ -53,19 +55,23 @@ class OnboardingScreen() : Screen {
         val snackBarController = LocalSnackbarController.current
         val navigator = LocalNavigator.currentOrThrow
         val tabScreen = rememberScreen(SharedScreen.TabScreen(LocalNavigator.currentOrThrow))
-        Box(modifier = Modifier.safeDrawingPadding()) {
-            OnboardingScreenContent(
-                loginInfo,
-                onLogin = screenModel::login,
-                onNicknameChanged = screenModel::onNicknameChanged,
-                onTagChanged = screenModel::onTagChanged,
-                recentLoginUsers = recentLoginUsers,
-                isLoading = isLoading,
-            )
+        Scaffold(
+            snackbarHost = { SnackbarHost(LocalSnackbarController.current.snackBarHostState) },
+        ) {
+            Box(modifier = Modifier.fillMaxWidth().padding(it)) {
+                OnboardingScreenContent(
+                    loginInfo,
+                    onLogin = screenModel::login,
+                    onNicknameChanged = screenModel::onNicknameChanged,
+                    onTagChanged = screenModel::onTagChanged,
+                    recentLoginUsers = recentLoginUsers,
+                    isLoading = isLoading,
+                )
+            }
         }
 
         LaunchedEffect(null) {
-            screenModel.sideEffect.collect {
+            screenModel.sideEffect.collectLatest {
                 when (it) {
                     is OnBoardingSideEffect.LoginFail -> {
                         when (it.errorState.errorCode) {
@@ -94,8 +100,6 @@ internal fun OnboardingScreenContent(
     onTagChanged: (String) -> Unit = {},
     isLoading: Boolean,
 ) {
-    val navigator = LocalNavigator.currentOrThrow
-    val homeScreen = rememberScreen(SharedScreen.HomeTab)
     Column(
         modifier =
             Modifier.fillMaxSize().background(WoosukTheme.colors.Black0)

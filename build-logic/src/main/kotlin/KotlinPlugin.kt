@@ -3,7 +3,6 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.exclude
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureKotlinMultiPlatform() {
@@ -18,6 +17,7 @@ internal fun Project.configureKotlinMultiPlatform() {
             commonMain.dependencies {
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
+                implementation(libs.findLibrary("kotlinx.datetime").get())
             }
             commonTest.dependencies {
                 implementation(libs.findLibrary("kotlin.test").get())

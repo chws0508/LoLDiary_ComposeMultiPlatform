@@ -9,5 +9,3 @@ sealed interface UserUiState {
 
     data object Fail : UserUiState
 }
-
-sealed interface MatchUiState

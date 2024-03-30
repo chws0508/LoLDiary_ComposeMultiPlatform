@@ -30,6 +30,8 @@ internal fun Project.configureKotlinAndroidPlugin() {
                 implementation(libs.findLibrary("koin.core").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("touchlab.common").get())
+                implementation(libs.findLibrary("kotlinx.datetime").get())
+                implementation(libs.findLibrary("napier").get())
             }
             commonTest.dependencies {
                 implementation(libs.findLibrary("kotlin.test").get())

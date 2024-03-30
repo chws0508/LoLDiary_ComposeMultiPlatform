@@ -1,7 +1,8 @@
 package com.woosuk.app
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -31,8 +32,12 @@ class TabScreen : Screen {
         val rootNavigator = LocalNavigator.currentOrThrow
         TabNavigator(HomeTab()) {
             Scaffold(
-                modifier = Modifier.safeDrawingPadding(),
                 snackbarHost = { SnackbarHost(LocalSnackbarController.current.snackBarHostState) },
+                content = {
+                    Box(modifier = Modifier.padding(it)) {
+                        CurrentTab()
+                    }
+                },
                 bottomBar = {
                     BottomAppBar {
                         TabNavigationItem(HomeTab(), rootNavigator)
@@ -42,7 +47,6 @@ class TabScreen : Screen {
                         )
                     }
                 },
-                content = { CurrentTab() },
                 containerColor = WoosukTheme.colors.Black0,
             )
         }

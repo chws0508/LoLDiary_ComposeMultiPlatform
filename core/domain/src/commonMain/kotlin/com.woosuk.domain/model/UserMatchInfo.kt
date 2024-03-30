@@ -35,6 +35,7 @@ data class Item(
 }
 
 data class GameInfo(
+    val matchId: String,
     val queueType: QueueType,
     val totalPlayTime: Long,
     val startAt: Date,
