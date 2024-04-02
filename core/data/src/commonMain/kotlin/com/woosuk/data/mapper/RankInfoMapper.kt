@@ -11,8 +11,9 @@ fun RankInfoDto.toRankInfo() =
     RankInfo(
         queueType =
             when (queueType) {
-                QueueType.SOLO_RANK.value -> QueueType.SOLO_RANK
-                else -> QueueType.SOLO_RANK
+                QueueType.SOLO_RANK.typeName -> QueueType.SOLO_RANK
+                QueueType.FREE_RANK.typeName -> QueueType.FREE_RANK
+                else -> QueueType.URF
             },
         rankTier =
             RankTier(

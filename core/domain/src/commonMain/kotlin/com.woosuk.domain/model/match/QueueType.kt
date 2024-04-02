@@ -1,10 +1,10 @@
 package com.woosuk.domain.model.match
 
-enum class QueueType(val value: String, val id: Int) {
+enum class QueueType(val typeName: String, val id: Int) {
     SOLO_RANK("RANKED_SOLO_5x5", 420),
     NORMAL("", 490),
     URF("", 1900),
-    FREE_RANK("", 440),
+    FREE_RANK("RANKED_FLEX_SR", 440),
     RANDOM("", 450),
     ;
 

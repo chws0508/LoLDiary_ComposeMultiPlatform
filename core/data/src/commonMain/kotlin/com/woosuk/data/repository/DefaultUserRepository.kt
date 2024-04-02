@@ -25,12 +25,13 @@ class DefaultUserRepository(
             val currentAccount =
                 accountRepository.getCurrentAccount() ?: throw IllegalStateException("계정 정보 불러오기 실패")
             val summonerDto = accountService.getSummoner(currentAccount.puuid).getOrThrow()
-            val rankInfo =
-                userService.gerRankInfo(currentAccount.summonerId).getOrThrow().first().toRankInfo()
+            val rankInfoList =
+                userService.gerRankInfo(currentAccount.summonerId).getOrThrow()
+                    .map { it.toRankInfo() }
             emit(
                 User(
                     account = currentAccount,
-                    rankInfo = rankInfo,
+                    rankInfoList = rankInfoList,
                     profileIconId = summonerDto.profileIconId,
                     level = summonerDto.summonerLevel,
                 ),

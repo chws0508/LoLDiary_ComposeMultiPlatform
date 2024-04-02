@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -71,47 +70,72 @@ fun HomeScreenContent(
     userUiState: UserUiState,
     matchInfoList: LazyPagingItems<UserMatchInfo>,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        when (userUiState) {
-            UserUiState.Fail -> Text("불러오는데에 실패하였어요")
-            UserUiState.Loading -> CircularProgressIndicator()
-            is UserUiState.Success -> {
-                Column(modifier = Modifier.padding(horizontal = WoosukTheme.padding.BasicHorizontalPadding)) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    UserProfile(
-                        account = userUiState.user.account,
-                        profileImageUrl = userUiState.user.profileImageUrl,
-                        level = userUiState.user.level,
-                    )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    RankInfo(rankInfo = userUiState.user.rankInfo)
-                }
-            }
-        }
-        Spacer(Modifier.height(WoosukTheme.padding.LargeVerticalPadding))
-        when (matchInfoList.loadState.refresh) {
-            is LoadState.Error -> {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text("매치 데이터를 불러올 수 없어요", modifier = Modifier.align(Alignment.Center))
-                }
+    when (userUiState) {
+        UserUiState.Fail ->
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    "불러오는데에 실패하였어요",
+                    modifier =
+                        Modifier.align(
+                            Alignment.Center,
+                        ),
+                )
             }
 
-            LoadState.Loading ->
-                Box(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-
-            is LoadState.NotLoading -> {
+        UserUiState.Loading -> {}
+        is UserUiState.Success -> {
+            Column {
+                UserProfileTopBar(
+                    account = userUiState.user.account,
+                    profileImageUrl = userUiState.user.profileImageUrl,
+                    level = userUiState.user.level,
+                )
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    items(
-                        matchInfoList.itemCount,
-                    ) {
-                        val matchInfo = matchInfoList[it]!!
-                        MatchInfoItem(
-                            userMatchInfo = matchInfo,
+                    item {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        RankInfoList(
+                            modifier = Modifier.padding(horizontal = WoosukTheme.padding.BasicHorizontalPadding),
+                            rankInfoList =
+                                listOf(
+                                    userUiState.user.soloRankInfo,
+                                    userUiState.user.freeRankInfo,
+                                ),
                         )
+                        Spacer(Modifier.height(WoosukTheme.padding.LargeVerticalPadding))
+                    }
+
+                    when (matchInfoList.loadState.refresh) {
+                        is LoadState.Error -> {
+                            item {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Text(
+                                        "매치 데이터를 불러올 수 없어요",
+                                        modifier = Modifier.align(Alignment.Center),
+                                    )
+                                }
+                            }
+                        }
+
+                        LoadState.Loading ->
+                            item {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                }
+                            }
+
+                        is LoadState.NotLoading -> {
+                            items(
+                                matchInfoList.itemCount,
+                            ) {
+                                val matchInfo = matchInfoList[it]!!
+                                MatchInfoItem(
+                                    userMatchInfo = matchInfo,
+                                )
+                            }
+                        }
                     }
                 }
             }

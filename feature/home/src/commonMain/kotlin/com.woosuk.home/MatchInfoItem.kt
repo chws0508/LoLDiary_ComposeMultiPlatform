@@ -39,7 +39,6 @@ import com.woosuk.ui.getName
 import com.woosuk.ui.roundToDecimals
 import com.woosuk.ui.toMinuteAndHour
 import com.woosuk.ui.toRelativeString
-import io.github.aakira.napier.Napier
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
@@ -89,6 +88,7 @@ fun MatchInfoItem(
                             vertical = WoosukTheme.padding.BasicContentPadding,
                         ).weight(1f),
                     userMatchInfo.items,
+                    userMatchInfo.userStats.isWin,
                 )
             }
         }
@@ -99,18 +99,18 @@ fun MatchInfoItem(
 fun ItemSection(
     modifier: Modifier,
     itemList: List<Item>,
+    isWin: Boolean,
 ) {
-    Napier.v { itemList.toString() }
     Column(modifier = modifier) {
         Row {
             for (i in 0..2) {
-                ItemImage(i, itemList)
+                ItemImage(i, itemList, isWin)
             }
-            ItemImage(6, itemList)
+            ItemImage(6, itemList, isWin)
         }
         Row {
             for (i in 3..5) {
-                ItemImage(i, itemList)
+                ItemImage(i, itemList, isWin)
             }
         }
     }
@@ -120,12 +120,19 @@ fun ItemSection(
 fun ItemImage(
     index: Int,
     itemList: List<Item>,
+    isWin: Boolean,
 ) {
+    val noItemColor =
+        if (isWin) {
+            WoosukTheme.colors.Primary60
+        } else {
+            WoosukTheme.colors.Secondary100
+        }
     if (itemList[index].id == Item.BLANK_ITEM_ID) {
         Box(
             modifier =
                 Modifier.size(20.dp).clip(CircleShape)
-                    .background(WoosukTheme.colors.Black60),
+                    .background(noItemColor),
         )
     } else {
         KamelImage(
@@ -135,7 +142,7 @@ fun ItemImage(
                 Box(
                     modifier =
                         Modifier.fillMaxSize()
-                            .background(WoosukTheme.colors.Black60),
+                            .background(noItemColor),
                 )
             },
             contentDescription = "${index}번째 아이템",

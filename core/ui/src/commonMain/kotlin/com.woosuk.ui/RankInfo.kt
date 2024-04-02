@@ -7,7 +7,8 @@ import com.woosuk.domain.model.match.RankTierType
 import dev.icerock.moko.resources.compose.painterResource
 
 @Composable
-fun RankInfo.tierImage(): Painter {
+fun RankInfo?.tierImage(): Painter {
+    if (this == null) return painterResource(MR.images.tier_iron)
     return when (rankTier.type) {
         RankTierType.IRON -> painterResource(MR.images.tier_iron)
         RankTierType.BRONZE -> painterResource(MR.images.tier_bronze)
