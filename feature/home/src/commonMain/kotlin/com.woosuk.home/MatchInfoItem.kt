@@ -62,7 +62,7 @@ fun MatchInfoItem(
                 totalPlayTime = userMatchInfo.gameInfo.totalPlayTime,
                 endTimeAt = userMatchInfo.gameInfo.endAt,
             )
-            HorizontalDivider(color = WoosukTheme.colors.Black60)
+            HorizontalDivider(color = WoosukTheme.colors.Black40)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 ChampionRuneSpellSection(
                     modifier =

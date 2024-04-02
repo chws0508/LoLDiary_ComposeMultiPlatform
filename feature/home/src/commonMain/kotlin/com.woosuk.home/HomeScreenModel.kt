@@ -69,6 +69,10 @@ class HomeScreenModel(
         }
     }
 
+    fun refresh() {
+        getCurrentUser()
+    }
+
     companion object {
         private const val LOAD_SIZE = 10
     }

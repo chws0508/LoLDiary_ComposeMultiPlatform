@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -35,6 +39,7 @@ fun UserProfileTopBar(
     modifier: Modifier = Modifier,
     account: Account,
     profileImageUrl: String,
+    onRefreshClick: () -> Unit,
     level: Int,
 ) {
     TopAppBar(
@@ -58,6 +63,17 @@ fun UserProfileTopBar(
                     )
                 }
             }
+        },
+        actions = {
+            Icon(
+                imageVector = Icons.Rounded.Refresh,
+                contentDescription = "전적 새로고침",
+                modifier =
+                    Modifier.clickable {
+                        onRefreshClick()
+                    }.padding(horizontal = WoosukTheme.padding.BasicHorizontalPadding),
+                tint = WoosukTheme.colors.Primary100,
+            )
         },
         windowInsets = WindowInsets(0, 0, 0, 0),
     )

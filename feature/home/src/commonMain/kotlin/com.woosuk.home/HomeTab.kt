@@ -61,7 +61,11 @@ class HomeTab : Tab {
                 }
             }
         }
-        HomeScreenContent(userUiState, matchInfoList)
+        HomeScreenContent(
+            userUiState = userUiState,
+            matchInfoList = matchInfoList,
+            onRefreshClick = homeScreenModel::refresh,
+        )
     }
 }
 
@@ -69,6 +73,7 @@ class HomeTab : Tab {
 fun HomeScreenContent(
     userUiState: UserUiState,
     matchInfoList: LazyPagingItems<UserMatchInfo>,
+    onRefreshClick: () -> Unit,
 ) {
     when (userUiState) {
         UserUiState.Fail ->
@@ -82,13 +87,18 @@ fun HomeScreenContent(
                 )
             }
 
-        UserUiState.Loading -> {}
+        UserUiState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
         is UserUiState.Success -> {
             Column {
                 UserProfileTopBar(
                     account = userUiState.user.account,
                     profileImageUrl = userUiState.user.profileImageUrl,
                     level = userUiState.user.level,
+                    onRefreshClick = onRefreshClick,
                 )
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),

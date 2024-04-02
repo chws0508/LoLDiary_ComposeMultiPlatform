@@ -16,7 +16,7 @@ class MainScreen() : Screen {
         LaunchedEffect(null) {
             mainScreenModel.isLogin.collect { isLogin ->
                 if (isLogin) {
-                    navigator.replace(OnboardingScreen())
+                    navigator.replace(TabScreen())
                 } else {
                     navigator.replace(OnboardingScreen())
                 }

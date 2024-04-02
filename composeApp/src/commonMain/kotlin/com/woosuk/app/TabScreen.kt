@@ -1,9 +1,10 @@
 package com.woosuk.app
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
@@ -43,11 +43,15 @@ class TabScreen : Screen {
                 },
                 bottomBar = {
                     NavigationBar(
+                        containerColor = WoosukTheme.colors.Black0,
                         modifier =
-                            Modifier.clip(
-                                RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+                            Modifier.border(
+                                border =
+                                    BorderStroke(
+                                        width = 1.dp,
+                                        color = WoosukTheme.colors.Black40,
+                                    ),
                             ),
-                        containerColor = WoosukTheme.colors.Black20,
                         tonalElevation = 5.dp,
                     ) {
                         TabNavigationItem(HomeTab(), rootNavigator)
