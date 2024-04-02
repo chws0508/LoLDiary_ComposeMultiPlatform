@@ -8,5 +8,4 @@ data class GameInfo(
     val totalPlayTime: Long,
     val startAt: Date,
     val endAt: Date,
-    val isWin: Boolean,
 )

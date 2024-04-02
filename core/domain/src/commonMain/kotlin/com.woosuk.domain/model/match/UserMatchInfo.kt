@@ -9,4 +9,5 @@ data class UserMatchInfo(
     val spells: List<Spell>,
     val runes: List<Rune>,
     val gameInfo: GameInfo,
+    val userStats: UserStats,
 )

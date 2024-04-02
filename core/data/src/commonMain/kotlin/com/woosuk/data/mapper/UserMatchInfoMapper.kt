@@ -9,6 +9,7 @@ import com.woosuk.domain.model.match.Item
 import com.woosuk.domain.model.match.QueueType
 import com.woosuk.domain.model.match.Spell
 import com.woosuk.domain.model.match.UserMatchInfo
+import com.woosuk.domain.model.match.UserStats
 import com.woosuk.network.model.MatchInfoDto
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -63,12 +64,18 @@ fun MatchInfoDto.toUserMatchInfo(puuid: String): UserMatchInfo {
                                 TimeZone.currentSystemDefault(),
                             ),
                     ),
-                isWin = user.win,
             ),
         runes =
             listOf(
                 RuneRepository.getRune(user.perks.styles[0].selections[0].perk), // 메인 룬
                 RuneRepository.getRune(user.perks.styles[1].style), // 서브 룬
+            ),
+        userStats =
+            UserStats(
+                kill = user.kills,
+                death = user.deaths,
+                assist = user.assists,
+                isWin = user.win,
             ),
     )
 }

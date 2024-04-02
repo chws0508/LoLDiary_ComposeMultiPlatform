@@ -27,11 +27,14 @@ import androidx.compose.ui.unit.dp
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.date.Date
 import com.woosuk.domain.model.match.Champion
+import com.woosuk.domain.model.match.Item
 import com.woosuk.domain.model.match.QueueType
 import com.woosuk.domain.model.match.Rune
 import com.woosuk.domain.model.match.Spell
 import com.woosuk.domain.model.match.UserMatchInfo
+import com.woosuk.domain.model.match.UserStats
 import com.woosuk.ui.getName
+import com.woosuk.ui.roundToDecimals
 import com.woosuk.ui.toMinuteAndHour
 import com.woosuk.ui.toRelativeString
 import io.kamel.image.KamelImage
@@ -47,12 +50,12 @@ fun MatchInfoItem(
         shape = RectangleShape,
         colors =
             CardDefaults.cardColors(
-                containerColor = if (userMatchInfo.gameInfo.isWin) WoosukTheme.colors.Primary40 else WoosukTheme.colors.Secondary60,
+                containerColor = if (userMatchInfo.userStats.isWin) WoosukTheme.colors.Primary40 else WoosukTheme.colors.Secondary60,
             ),
     ) {
         Column {
             MatchInfoTopSection(
-                isWin = userMatchInfo.gameInfo.isWin,
+                isWin = userMatchInfo.userStats.isWin,
                 queueType = userMatchInfo.gameInfo.queueType,
                 totalPlayTime = userMatchInfo.gameInfo.totalPlayTime,
                 endTimeAt = userMatchInfo.gameInfo.endAt,
@@ -60,12 +63,84 @@ fun MatchInfoItem(
             HorizontalDivider(color = WoosukTheme.colors.Black60)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 ChampionRuneSpellSection(
+                    modifier =
+                        Modifier.padding(
+                            horizontal = WoosukTheme.padding.BasicHorizontalPadding,
+                            vertical = 16.dp,
+                        ).weight(1f),
                     champion = userMatchInfo.champion,
                     runes = userMatchInfo.runes,
                     spells = userMatchInfo.spells,
                 )
+                KillDeathSection(
+                    Modifier.padding(
+                        horizontal = WoosukTheme.padding.BasicHorizontalPadding,
+                        vertical = WoosukTheme.padding.BasicContentPadding,
+                    ).weight(1f),
+                    userMatchInfo.userStats,
+                )
+                ItemSection(
+                    modifier =
+                        Modifier.padding(
+                            horizontal = WoosukTheme.padding.BasicHorizontalPadding,
+                            vertical = WoosukTheme.padding.BasicContentPadding,
+                        ).weight(1f),
+                    userMatchInfo.items,
+                )
             }
         }
+    }
+}
+
+@Composable
+fun ItemSection(
+    modifier: Modifier,
+    items: List<Item>,
+) {
+    Box(modifier = modifier) {
+    }
+}
+
+@Composable
+fun KillDeathSection(
+    modifier: Modifier = Modifier,
+    userStats: UserStats,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Row {
+            Text(
+                text = "${userStats.kill} /",
+                style = WoosukTheme.typography.bodyLargeMedium,
+                color = WoosukTheme.colors.Black100,
+            )
+            Text(
+                text = " ${userStats.death} ",
+                style = WoosukTheme.typography.bodyLargeMedium,
+                color = WoosukTheme.colors.Error,
+            )
+            Text(
+                text = "/ ${userStats.assist}",
+                style = WoosukTheme.typography.bodyLargeMedium,
+                color = WoosukTheme.colors.Black100,
+            )
+        }
+        Spacer(modifier = Modifier.height(3.dp))
+        Text(
+            text =
+                if (userStats.death == 0) {
+                    "Perfect"
+                } else {
+                    "평점 ${
+                        userStats.kdaScore.roundToDecimals(
+                            2,
+                        )
+                    }"
+                },
+            style = WoosukTheme.typography.bodySmallRegular,
+            color = WoosukTheme.colors.Black60,
+        )
     }
 }
 
@@ -76,23 +151,26 @@ fun ChampionRuneSpellSection(
     runes: List<Rune>,
     spells: List<Spell>,
 ) {
-    Row {
+    Row(
+        modifier = modifier,
+    ) {
         KamelImage(
             resource = asyncPainterResource(champion.imageUrl),
             contentDescription = "챔피언",
-            modifier = modifier.size(48.dp).clip(CircleShape),
+            modifier = Modifier.size(48.dp).clip(CircleShape),
         )
+        Spacer(modifier = Modifier.width(5.dp))
         Column {
             KamelImage(
                 resource = asyncPainterResource(spells[0].imageUrl),
                 contentDescription = "첫번쨰 스펠",
-                modifier = modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(24.dp).clip(CircleShape),
                 onFailure = { Box(modifier = Modifier) { Text("실패") } },
             )
             KamelImage(
                 resource = asyncPainterResource(spells[1].imageUrl),
                 contentDescription = "두번쨰 스펠",
-                modifier = modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(24.dp).clip(CircleShape),
                 onFailure = { Box(modifier = Modifier) { Text("실패") } },
             )
         }
@@ -100,12 +178,12 @@ fun ChampionRuneSpellSection(
             KamelImage(
                 resource = asyncPainterResource(runes[0].imageUrl),
                 contentDescription = "첫번째 룬",
-                modifier = modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(24.dp).clip(CircleShape),
             )
             KamelImage(
                 resource = asyncPainterResource(runes[1].imageUrl),
                 contentDescription = "두번째 룬",
-                modifier = modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(24.dp).clip(CircleShape),
             )
         }
     }
