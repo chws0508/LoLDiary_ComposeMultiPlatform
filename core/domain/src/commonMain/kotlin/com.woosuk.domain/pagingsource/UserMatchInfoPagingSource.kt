@@ -3,8 +3,8 @@ package com.woosuk.domain.pagingsource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.woosuk.domain.model.ErrorState
-import com.woosuk.domain.model.QueueType
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.QueueType
+import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.repository.MatchRepository
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDateTime
@@ -46,7 +46,10 @@ class UserMatchInfoPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, UserMatchInfo>): Int? {
-        return state.anchorPosition
+        return state.anchorPosition?.let { achorPosition ->
+            state.closestPageToPosition(achorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(achorPosition)?.nextKey?.minus(1)
+        }
     }
 
     companion object {

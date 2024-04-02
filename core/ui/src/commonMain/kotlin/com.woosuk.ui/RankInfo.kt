@@ -2,8 +2,8 @@ package com.woosuk.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import com.woosuk.domain.model.RankInfo
-import com.woosuk.domain.model.RankTierType
+import com.woosuk.domain.model.match.RankInfo
+import com.woosuk.domain.model.match.RankTierType
 import dev.icerock.moko.resources.compose.painterResource
 
 @Composable

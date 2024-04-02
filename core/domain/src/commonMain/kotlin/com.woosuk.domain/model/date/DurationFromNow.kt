@@ -51,7 +51,7 @@ sealed class DurationFromNow(
 
         private fun DateTimePeriod.isOverOneDay() = days >= 1
 
-        private fun DateTimePeriod.isOverWeekDays() = days >= DAYS_FOR_WEEK
+        private fun DateTimePeriod.isOverWeekDays() = days >= DAYS_FOR_WEEK || months >= 1
 
         private fun DateTimePeriod.isOverOneYear() = years >= 1
 

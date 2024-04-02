@@ -1,12 +1,14 @@
 package com.woosuk.data.mapper
 
+import com.woosuk.data.repository.RuneRepository
 import com.woosuk.domain.model.Account
-import com.woosuk.domain.model.Champion
-import com.woosuk.domain.model.GameInfo
-import com.woosuk.domain.model.Item
-import com.woosuk.domain.model.QueueType
-import com.woosuk.domain.model.UserMatchInfo
 import com.woosuk.domain.model.date.Date
+import com.woosuk.domain.model.match.Champion
+import com.woosuk.domain.model.match.GameInfo
+import com.woosuk.domain.model.match.Item
+import com.woosuk.domain.model.match.QueueType
+import com.woosuk.domain.model.match.Spell
+import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.network.model.MatchInfoDto
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -27,7 +29,7 @@ fun MatchInfoDto.toUserMatchInfo(puuid: String): UserMatchInfo {
                 isCurrentUser = false,
             ),
         champion = Champion(id = user.championId, name = user.championName),
-        item =
+        items =
             listOf(
                 Item(user.item0),
                 Item(user.item1),
@@ -36,6 +38,11 @@ fun MatchInfoDto.toUserMatchInfo(puuid: String): UserMatchInfo {
                 Item(user.item4),
                 Item(user.item5),
                 Item(user.item6),
+            ),
+        spells =
+            listOf(
+                Spell.fromId(user.summoner1Id),
+                Spell.fromId(user.summoner2Id),
             ),
         gameInfo =
             GameInfo(
@@ -57,6 +64,11 @@ fun MatchInfoDto.toUserMatchInfo(puuid: String): UserMatchInfo {
                             ),
                     ),
                 isWin = user.win,
+            ),
+        runes =
+            listOf(
+                RuneRepository.getRune(user.perks.styles[0].selections[0].perk), // 메인 룬
+                RuneRepository.getRune(user.perks.styles[1].style), // 서브 룬
             ),
     )
 }

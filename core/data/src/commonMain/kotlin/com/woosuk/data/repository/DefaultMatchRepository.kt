@@ -3,7 +3,7 @@ package com.woosuk.data.repository
 import com.skydoves.sandwich.getOrThrow
 import com.woosuk.data.mapper.toUserMatchInfo
 import com.woosuk.domain.model.ErrorState
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.repository.MatchRepository
 import com.woosuk.network.service.MatchService
 import kotlinx.coroutines.CoroutineDispatcher

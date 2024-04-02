@@ -3,12 +3,18 @@ package com.woosuk.network.di
 import LoLDiary.core.network.BuildConfig
 import com.woosuk.network.Server
 import com.woosuk.network.service.AccountService
+import com.woosuk.network.service.CdnService
 import com.woosuk.network.service.DefaultAccountService
+import com.woosuk.network.service.DefaultCdnService
 import com.woosuk.network.service.DefaultMatchService
 import com.woosuk.network.service.DefaultUserService
 import com.woosuk.network.service.MatchService
 import com.woosuk.network.service.UserService
 import io.github.aakira.napier.Napier
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.serializer.KotlinXSerializer
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpTimeout
@@ -83,6 +89,13 @@ val networkModule =
                 install(HttpTimeout) { requestTimeoutMillis = TIME_OUT }
             }
         }
+
+        single<SupabaseClient> {
+            createSupabaseClient(BuildConfig.Supabase_Url, BuildConfig.Supabase_Api_key) {
+                defaultSerializer = KotlinXSerializer(json = get())
+                install(Postgrest)
+            }
+        }
     }
 
 val serviceModule =
@@ -103,6 +116,9 @@ val serviceModule =
             DefaultMatchService(
                 get(named("Asia")),
             )
+        }
+        single<CdnService> {
+            DefaultCdnService(get())
         }
     }
 

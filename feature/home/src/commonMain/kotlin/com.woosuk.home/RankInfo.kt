@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.designsystem.ui.WoosukCard
-import com.woosuk.domain.model.RankInfo
+import com.woosuk.domain.model.match.RankInfo
 import com.woosuk.ui.tierImage
 
 @Composable

@@ -10,7 +10,7 @@ plugins {
 android { namespace = "com.woosuk.network" }
 
 kotlin {
-   configureIos("network")
+    configureIos("network")
 
     sourceSets {
         androidMain.dependencies {
@@ -23,6 +23,7 @@ kotlin {
             implementation(libs.ktor.json)
             implementation(libs.ktor.logging)
             implementation(libs.skydoves.sandwich)
+            implementation(libs.supabase.postgrest)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -33,6 +34,14 @@ kotlin {
 buildConfig {
     buildConfigField<String>(
         "X_Riot_Token",
-        gradleLocalProperties(rootDir).getProperty("X_RIOT_TOKEN")
+        gradleLocalProperties(rootDir).getProperty("X_RIOT_TOKEN"),
+    )
+    buildConfigField<String>(
+        "Supabase_Url",
+        gradleLocalProperties(rootDir).getProperty("SUPABASE_URL"),
+    )
+    buildConfigField<String>(
+        "Supabase_Api_key",
+        gradleLocalProperties(rootDir).getProperty("SUPABASE_API_KEY"),
     )
 }

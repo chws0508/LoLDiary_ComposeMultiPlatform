@@ -1,5 +1,6 @@
 package com.woosuk.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,8 +29,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
-import com.woosuk.domain.model.UserMatchInfo
-import com.woosuk.ui.toRelativeString
+import com.woosuk.domain.model.match.UserMatchInfo
 
 class HomeTab : Tab {
     override val options: TabOptions
@@ -88,6 +88,7 @@ fun HomeScreenContent(
                 }
             }
         }
+        Spacer(Modifier.height(WoosukTheme.padding.LargeVerticalPadding))
         when (matchInfoList.loadState.refresh) {
             is LoadState.Error -> {
                 Box(modifier = Modifier.fillMaxSize()) {
@@ -101,19 +102,16 @@ fun HomeScreenContent(
                 }
 
             is LoadState.NotLoading -> {
-                LazyColumn {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                ) {
                     items(
                         matchInfoList.itemCount,
-                        key = { matchInfoList[it]!!.gameInfo.matchId },
                     ) {
-                        val matchInfo = matchInfoList[it] ?: throw IllegalStateException()
-                        Column {
-                            Text("${matchInfo.account.nickName}")
-                            Text("${matchInfo.gameInfo.queueType}")
-                            Text("${matchInfo.champion.name}")
-                            Text("${matchInfo.gameInfo.endAt.toRelativeString()}")
-                            Text("${matchInfo.gameInfo.isWin}")
-                        }
+                        val matchInfo = matchInfoList[it]!!
+                        MatchInfoItem(
+                            userMatchInfo = matchInfo,
+                        )
                     }
                 }
             }

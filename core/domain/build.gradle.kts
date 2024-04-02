@@ -9,6 +9,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.androidx.paging.common) // without android dependencies paging
+            implementation(libs.napier)
         }
     }
 }

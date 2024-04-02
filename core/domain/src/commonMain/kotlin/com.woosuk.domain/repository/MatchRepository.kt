@@ -1,7 +1,7 @@
 package com.woosuk.domain.repository
 
 import com.woosuk.domain.model.ErrorState
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.UserMatchInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDateTime
 

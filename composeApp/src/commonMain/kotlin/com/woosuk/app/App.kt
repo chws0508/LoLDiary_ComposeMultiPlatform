@@ -66,7 +66,7 @@ fun registerScreen() {
 val screenModelModule =
     module {
         factory { OnboardingScreenModel(get(), get()) }
-        factory { MainScreenModel(get()) }
+        factory { MainScreenModel(get(), get()) }
         factory { HomeScreenModel(get(), get()) }
     }
 

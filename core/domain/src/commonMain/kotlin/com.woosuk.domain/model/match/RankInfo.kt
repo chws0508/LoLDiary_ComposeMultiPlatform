@@ -1,4 +1,4 @@
-package com.woosuk.domain.model
+package com.woosuk.domain.model.match
 
 data class RankInfo(
     val queueType: QueueType,

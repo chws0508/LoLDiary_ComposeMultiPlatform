@@ -1,4 +1,4 @@
-package com.woosuk.domain.model
+package com.woosuk.domain.model.match
 
 enum class QueueType(val value: String, val id: Int) {
     SOLO_RANK("RANKED_SOLO_5x5", 420),

@@ -4,8 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.woosuk.domain.model.ErrorState
-import com.woosuk.domain.model.QueueType
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.QueueType
+import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.pagingsource.UserMatchInfoPagingSource
 import com.woosuk.domain.repository.MatchRepository
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +23,7 @@ class GetUserMatchInfoListUseCase(
         onError: (ErrorState) -> Unit,
     ): Flow<PagingData<UserMatchInfo>> {
         return Pager(
-            config = PagingConfig(pageSize = loadSize),
+            config = PagingConfig(pageSize = loadSize, enablePlaceholders = true),
             pagingSourceFactory = {
                 UserMatchInfoPagingSource(
                     matchRepository = matchRepository,

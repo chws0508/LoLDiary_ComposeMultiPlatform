@@ -4,10 +4,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.usecase.GetCurrentUserUseCase
 import com.woosuk.domain.usecase.GetUserMatchInfoListUseCase
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +38,6 @@ class HomeScreenModel(
     }
 
     private fun getCurrentUser() {
-        Napier.v("유저 정보 부름", tag = "wooseok")
         getCurrentUserUseCase(onError = { _userUiState.update { UserUiState.Fail } })
             .onStart { _userUiState.update { UserUiState.Loading } }
             .onEach { user ->
@@ -72,6 +70,6 @@ class HomeScreenModel(
     }
 
     companion object {
-        private const val LOAD_SIZE = 5
+        private const val LOAD_SIZE = 8
     }
 }

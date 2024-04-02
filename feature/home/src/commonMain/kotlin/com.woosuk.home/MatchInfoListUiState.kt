@@ -1,6 +1,6 @@
 package com.woosuk.home
 
-import com.woosuk.domain.model.UserMatchInfo
+import com.woosuk.domain.model.match.UserMatchInfo
 
 sealed interface MatchInfoListUiState {
     data object Loading : MatchInfoListUiState

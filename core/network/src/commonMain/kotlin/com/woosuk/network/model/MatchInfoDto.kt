@@ -55,5 +55,22 @@ data class ParticipantDto(
     val item6: Int,
     val summoner1Id: Int,
     val summoner2Id: Int,
+    val perks: PerksDto,
     val win: Boolean,
+)
+
+@Serializable
+data class PerksDto(
+    val styles: List<PerkStyleDto>,
+)
+
+@Serializable
+data class PerkStyleDto(
+    val style: Int,
+    val selections: List<RuneSelection>,
+)
+
+@Serializable
+data class RuneSelection(
+    val perk: Int,
 )

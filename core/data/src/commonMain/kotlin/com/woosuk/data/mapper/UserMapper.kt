@@ -1,10 +1,10 @@
 package com.woosuk.data.mapper
 
-import com.woosuk.domain.model.QueueType
-import com.woosuk.domain.model.RankInfo
-import com.woosuk.domain.model.RankTier
-import com.woosuk.domain.model.RankTierStep
-import com.woosuk.domain.model.RankTierType
+import com.woosuk.domain.model.match.QueueType
+import com.woosuk.domain.model.match.RankInfo
+import com.woosuk.domain.model.match.RankTier
+import com.woosuk.domain.model.match.RankTierStep
+import com.woosuk.domain.model.match.RankTierType
 import com.woosuk.network.model.RankInfoDto
 
 fun RankInfoDto.toRankInfo() =
