@@ -34,6 +34,11 @@ android {
         versionCode = 1
         versionName = "1.0.0"
     }
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
 }
 multiplatformResources {
     multiplatformResourcesPackage = "com.woosuk.app"

@@ -3,7 +3,6 @@ package com.woosuk.data.repository
 import com.woosuk.domain.model.match.Rune
 import com.woosuk.network.model.RuneCategoryDto
 import com.woosuk.network.service.CdnService
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +26,6 @@ object RuneRepository : KoinComponent {
         }.flowOn(Dispatchers.IO)
 
     fun getRune(id: Int): Rune {
-        Napier.v(id.toString(), tag = "룬 아이디")
         val list = runeInfo.value
         list.forEach {
             if (it.id == id) {

@@ -1,5 +1,6 @@
 package com.woosuk.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +39,7 @@ import com.woosuk.ui.getName
 import com.woosuk.ui.roundToDecimals
 import com.woosuk.ui.toMinuteAndHour
 import com.woosuk.ui.toRelativeString
+import io.github.aakira.napier.Napier
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
@@ -67,7 +70,7 @@ fun MatchInfoItem(
                         Modifier.padding(
                             horizontal = WoosukTheme.padding.BasicHorizontalPadding,
                             vertical = 16.dp,
-                        ).weight(1f),
+                        ),
                     champion = userMatchInfo.champion,
                     runes = userMatchInfo.runes,
                     spells = userMatchInfo.spells,
@@ -95,9 +98,48 @@ fun MatchInfoItem(
 @Composable
 fun ItemSection(
     modifier: Modifier,
-    items: List<Item>,
+    itemList: List<Item>,
 ) {
-    Box(modifier = modifier) {
+    Napier.v { itemList.toString() }
+    Column(modifier = modifier) {
+        Row {
+            for (i in 0..2) {
+                ItemImage(i, itemList)
+            }
+            ItemImage(6, itemList)
+        }
+        Row {
+            for (i in 3..5) {
+                ItemImage(i, itemList)
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemImage(
+    index: Int,
+    itemList: List<Item>,
+) {
+    if (itemList[index].id == Item.BLANK_ITEM_ID) {
+        Box(
+            modifier =
+                Modifier.size(20.dp).clip(CircleShape)
+                    .background(WoosukTheme.colors.Black60),
+        )
+    } else {
+        KamelImage(
+            modifier = Modifier.size(20.dp).clip(CircleShape),
+            resource = asyncPainterResource(itemList[index].imageUrl),
+            onFailure = {
+                Box(
+                    modifier =
+                        Modifier.fillMaxSize()
+                            .background(WoosukTheme.colors.Black60),
+                )
+            },
+            contentDescription = "${index}번째 아이템",
+        )
     }
 }
 
@@ -165,13 +207,11 @@ fun ChampionRuneSpellSection(
                 resource = asyncPainterResource(spells[0].imageUrl),
                 contentDescription = "첫번쨰 스펠",
                 modifier = Modifier.size(24.dp).clip(CircleShape),
-                onFailure = { Box(modifier = Modifier) { Text("실패") } },
             )
             KamelImage(
                 resource = asyncPainterResource(spells[1].imageUrl),
                 contentDescription = "두번쨰 스펠",
                 modifier = Modifier.size(24.dp).clip(CircleShape),
-                onFailure = { Box(modifier = Modifier) { Text("실패") } },
             )
         }
         Column {
@@ -232,6 +272,7 @@ fun MatchInfoTopSection(
                 Modifier.padding(
                     horizontal = WoosukTheme.padding.BasicHorizontalPadding,
                 ).height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = queueType.getName(),

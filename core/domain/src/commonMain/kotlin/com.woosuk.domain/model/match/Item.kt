@@ -11,5 +11,7 @@ data class Item(
         private const val ITEM_IMAGE_PREFIX =
             "img/item/"
         private const val IMAGE_TYPE = ".png"
+
+        const val BLANK_ITEM_ID = 0
     }
 }

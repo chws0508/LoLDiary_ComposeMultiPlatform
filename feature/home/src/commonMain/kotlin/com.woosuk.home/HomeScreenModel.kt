@@ -70,6 +70,6 @@ class HomeScreenModel(
     }
 
     companion object {
-        private const val LOAD_SIZE = 8
+        private const val LOAD_SIZE = 20
     }
 }

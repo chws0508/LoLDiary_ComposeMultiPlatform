@@ -1,10 +1,9 @@
 package com.woosuk.ui
 
-import kotlin.math.roundToInt
-
 fun Float.roundToDecimals(decimals: Int): Float {
-    var dotAt = 1
-    repeat(decimals) { dotAt *= 10 }
-    val roundedValue = (this * dotAt).roundToInt()
-    return (roundedValue / dotAt) + (roundedValue % dotAt).toFloat() / dotAt
+    var flag = 1
+    repeat(decimals) {
+        flag *= 10
+    }
+    return (this * flag).toInt().toFloat() / flag
 }
