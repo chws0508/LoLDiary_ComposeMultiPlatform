@@ -11,7 +11,7 @@ import com.woosuk.domain.repository.MatchRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDateTime
 
-class GetUserMatchInfoListUseCase(
+class GetUserMatchInfoPagingUseCase(
     private val matchRepository: MatchRepository,
 ) {
     operator fun invoke(

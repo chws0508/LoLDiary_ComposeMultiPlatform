@@ -14,13 +14,16 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.woosuk.home.HomeTab
 
 @Composable
-actual fun BackPressHandler(tabNavigator: TabNavigator, rootNavigator: Navigator) {
+actual fun BackPressHandler(
+    tabNavigator: TabNavigator,
+    rootNavigator: Navigator,
+) {
     val context = LocalContext.current
     var backPressedState by remember { mutableStateOf(true) }
     var backPressedTime = 0L
     BackHandler {
         if (tabNavigator.current is HomeTab) {
-            if(System.currentTimeMillis() - backPressedTime <= FINISH_TIME) {
+            if (System.currentTimeMillis() - backPressedTime <= FINISH_TIME) {
                 (context as Activity).finish()
             } else {
                 backPressedState = true

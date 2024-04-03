@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,13 +29,14 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.match.UserMatchInfo
+import com.woosuk.ui.MatchInfoItem
 
 class HomeTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
             val title = "홈"
-            val icon = rememberVectorPainter(Icons.Default.Home)
+            val icon = rememberVectorPainter(Icons.Rounded.Home)
 
             return remember {
                 TabOptions(

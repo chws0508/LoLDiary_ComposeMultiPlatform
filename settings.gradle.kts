@@ -9,6 +9,7 @@ include(":core:ui")
 include(":core:navigation")
 include(":feature:onboarding")
 include(":feature:home")
+include(":feature:calendar")
 
 pluginManagement {
     includeBuild("build-logic")

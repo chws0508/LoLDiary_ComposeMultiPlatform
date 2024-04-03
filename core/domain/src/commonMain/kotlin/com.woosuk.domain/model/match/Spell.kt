@@ -1,6 +1,6 @@
 package com.woosuk.domain.model.match
 
-import com.woosuk.domain.Url
+import com.woosuk.domain.util.UrlUtil
 
 enum class Spell(val id: Int) {
     SummonerBarrier(21),
@@ -27,7 +27,7 @@ enum class Spell(val id: Int) {
         "img/spell/"
     private val imageType = ".png"
 
-    val imageUrl = Url.cdnPrefix + spellImagePrefix + name + imageType
+    val imageUrl = UrlUtil.cdnPrefix + spellImagePrefix + name + imageType
 
     companion object {
         fun fromId(id: Int): Spell {

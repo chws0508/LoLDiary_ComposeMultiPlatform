@@ -2,6 +2,7 @@ package com.woosuk.ui
 
 import com.woosuk.domain.model.date.Date
 import com.woosuk.domain.model.date.DurationFromNow
+import kotlinx.datetime.DayOfWeek
 import kotlin.time.Duration.Companion.seconds
 
 fun Date.toRelativeString(): String {
@@ -19,4 +20,17 @@ fun Long.toMinuteAndHour(): String {
     val minutes = this / 60
     val seconds = this % 60
     return "${minutes}분 ${seconds}초"
+}
+
+fun DayOfWeek.getKoreanString(): String {
+    return when (this) {
+        DayOfWeek.MONDAY -> "월"
+        DayOfWeek.TUESDAY -> "화"
+        DayOfWeek.WEDNESDAY -> "수"
+        DayOfWeek.THURSDAY -> "목"
+        DayOfWeek.FRIDAY -> "금"
+        DayOfWeek.SATURDAY -> "토"
+        DayOfWeek.SUNDAY -> "일"
+        else -> "오류"
+    }
 }

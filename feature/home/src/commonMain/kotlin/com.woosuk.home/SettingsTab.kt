@@ -15,7 +15,6 @@ import com.woosuk.navigation.SharedScreen
 class SettingsTab(
     val navigateToOnBoarding: () -> Unit,
 ) : Tab {
-
     override val options: TabOptions
         @Composable
         get() {
@@ -26,14 +25,14 @@ class SettingsTab(
                 TabOptions(
                     index = 0u,
                     title = title,
-                    icon = icon
+                    icon = icon,
                 )
             }
         }
 
     @Composable
     override fun Content() {
-        val onboardingScreen = rememberScreen(SharedScreen.Onboarding)
+        val onboardingScreen = rememberScreen(SharedScreen.OnboardingScreen)
         Button(onClick = {
             navigateToOnBoarding()
         }) {

@@ -6,7 +6,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.usecase.GetCurrentUserUseCase
-import com.woosuk.domain.usecase.GetUserMatchInfoListUseCase
+import com.woosuk.domain.usecase.GetUserMatchInfoPagingUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class HomeScreenModel(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val getUserMatchInfoListUseCase: GetUserMatchInfoListUseCase,
+    private val getUserMatchInfoPagingUseCase: GetUserMatchInfoPagingUseCase,
 ) : ScreenModel {
     private val _userUiState = MutableStateFlow<UserUiState>(UserUiState.Loading)
     val userUiState = _userUiState.asStateFlow()
@@ -53,7 +53,7 @@ class HomeScreenModel(
                     UserUiState.Loading -> _matchInfoList.update { PagingData.empty() }
                     is UserUiState.Success -> {
                         val pagingData =
-                            getUserMatchInfoListUseCase(
+                            getUserMatchInfoPagingUseCase(
                                 loadSize = LOAD_SIZE,
                                 puuid = it.user.account.puuid,
                                 onError = {

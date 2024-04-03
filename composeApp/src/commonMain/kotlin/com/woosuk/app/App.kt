@@ -8,6 +8,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
+import com.woosuk.calendar.CalendarScreenModel
+import com.woosuk.calendar.CalendarTab
 import com.woosuk.data.di.repositoryModule
 import com.woosuk.database.dataSourceModule
 import com.woosuk.database.databaseModule
@@ -48,7 +50,7 @@ internal fun App() {
 
 fun registerScreen() {
     ScreenRegistry {
-        register<SharedScreen.Onboarding> {
+        register<SharedScreen.OnboardingScreen> {
             OnboardingScreen()
         }
         register<SharedScreen.HomeTab> {
@@ -60,6 +62,9 @@ fun registerScreen() {
         register<SharedScreen.TabScreen> {
             TabScreen()
         }
+        register<SharedScreen.CalendarTab> {
+            CalendarTab()
+        }
     }
 }
 
@@ -68,6 +73,7 @@ val screenModelModule =
         factory { OnboardingScreenModel(get(), get()) }
         factory { MainScreenModel(get(), get()) }
         factory { HomeScreenModel(get(), get()) }
+        factory { CalendarScreenModel(get(), get()) }
     }
 
 val sharedModules =

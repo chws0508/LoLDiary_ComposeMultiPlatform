@@ -20,6 +20,7 @@ kotlin {
             implementation(project(":core:navigation"))
             implementation(project(":feature:onboarding"))
             implementation(project(":feature:home"))
+            implementation(project(":feature:calendar"))
             implementation(project(":core:database"))
         }
     }
