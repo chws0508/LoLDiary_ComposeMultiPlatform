@@ -1,6 +1,7 @@
 package com.woosuk.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,9 +43,13 @@ import io.kamel.image.asyncPainterResource
 fun MatchInfoItem(
     modifier: Modifier = Modifier,
     userMatchInfo: UserMatchInfo,
+    onClickView: () -> Unit,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier =
+            modifier.fillMaxWidth().clickable {
+                onClickView()
+            },
         shape = RectangleShape,
         colors =
             CardDefaults.cardColors(

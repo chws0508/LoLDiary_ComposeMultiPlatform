@@ -23,12 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.match.UserMatchInfo
+import com.woosuk.navigation.SharedScreen
 import com.woosuk.ui.MatchInfoItem
 
 class HomeTab : Tab {
@@ -53,6 +56,7 @@ class HomeTab : Tab {
         val homeScreenModel = getScreenModel<HomeScreenModel>()
         val userUiState = homeScreenModel.userUiState.collectAsState().value
         val matchInfoList = homeScreenModel.matchInfoList.collectAsLazyPagingItems()
+        val tabNavigator = LocalTabNavigator.current
 
         LaunchedEffect(null) {
             homeScreenModel.sideEffect.collect {
@@ -66,6 +70,9 @@ class HomeTab : Tab {
             userUiState = userUiState,
             matchInfoList = matchInfoList,
             onRefreshClick = homeScreenModel::refresh,
+            navigateToMatchDetails = {
+                tabNavigator.current = it
+            },
         )
     }
 }
@@ -75,6 +82,7 @@ fun HomeScreenContent(
     userUiState: UserUiState,
     matchInfoList: LazyPagingItems<UserMatchInfo>,
     onRefreshClick: () -> Unit,
+    navigateToMatchDetails: (Tab) -> Unit,
 ) {
     when (userUiState) {
         UserUiState.Fail ->
@@ -142,8 +150,18 @@ fun HomeScreenContent(
                                 matchInfoList.itemCount,
                             ) {
                                 val matchInfo = matchInfoList[it]!!
+                                val matchDetailsScreen =
+                                    rememberScreen(
+                                        SharedScreen.MatchDetailsScreen(
+                                            matchInfo.gameInfo.matchId,
+                                            LocalTabNavigator.current.current,
+                                        ),
+                                    ) as Tab
                                 MatchInfoItem(
                                     userMatchInfo = matchInfo,
+                                    onClickView = {
+                                        navigateToMatchDetails(matchDetailsScreen)
+                                    },
                                 )
                             }
                         }

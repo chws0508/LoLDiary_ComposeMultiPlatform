@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
@@ -29,14 +28,13 @@ import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
-import com.woosuk.navigation.SharedScreen
 
 class TabScreen : Screen {
     @Composable
     override fun Content() {
-        val onboardingScreen = rememberScreen(SharedScreen.OnboardingScreen)
         val rootNavigator = LocalNavigator.currentOrThrow
         TabNavigator(HomeTab()) {
+            BackPressHandler(it, rootNavigator)
             Scaffold(
                 snackbarHost = { SnackbarHost(LocalSnackbarController.current.snackBarHostState) },
                 content = {
@@ -46,16 +44,20 @@ class TabScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    NavigationBar(
-                        containerColor = WoosukTheme.colors.Black0,
-                        tonalElevation = 5.dp,
-                    ) {
-                        TabNavigationItem(HomeTab(), rootNavigator)
-                        TabNavigationItem(CalendarTab(), rootNavigator)
-                        TabNavigationItem(
-                            SettingsTab { rootNavigator.replace(onboardingScreen) },
-                            rootNavigator,
-                        )
+                    when (it.current) {
+                        is HomeTab, is SettingsTab, is CalendarTab -> {
+                            NavigationBar(
+                                containerColor = WoosukTheme.colors.Black0,
+                                tonalElevation = 5.dp,
+                            ) {
+                                TabNavigationItem(HomeTab())
+                                TabNavigationItem(CalendarTab())
+                                TabNavigationItem(SettingsTab(rootNavigator))
+                            }
+                        }
+
+                        else -> {
+                        }
                     }
                 },
                 containerColor = WoosukTheme.colors.Black0,
@@ -71,12 +73,8 @@ expect fun BackPressHandler(
 )
 
 @Composable
-private fun RowScope.TabNavigationItem(
-    tab: Tab,
-    rootNavigator: Navigator,
-) {
+private fun RowScope.TabNavigationItem(tab: Tab) {
     val tabNavigator = LocalTabNavigator.current
-    BackPressHandler(tabNavigator, rootNavigator)
     NavigationBarItem(
         selected = tabNavigator.current.key == tab.key,
         onClick = { tabNavigator.current = tab },

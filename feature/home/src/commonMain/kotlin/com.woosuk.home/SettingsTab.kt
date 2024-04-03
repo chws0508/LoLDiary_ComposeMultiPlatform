@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.core.registry.rememberScreen
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.navigation.SharedScreen
+import io.github.aakira.napier.Napier
 
 class SettingsTab(
-    val navigateToOnBoarding: () -> Unit,
+    val rootNavigator: Navigator,
 ) : Tab {
     override val options: TabOptions
         @Composable
@@ -32,9 +34,10 @@ class SettingsTab(
 
     @Composable
     override fun Content() {
+        Napier.v(rootNavigator.items.toString(), tag = "wooseok")
         val onboardingScreen = rememberScreen(SharedScreen.OnboardingScreen)
         Button(onClick = {
-            navigateToOnBoarding()
+            rootNavigator.replace(onboardingScreen)
         }) {
             Text("세팅입니다~ 변경하세요~")
         }

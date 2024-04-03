@@ -22,14 +22,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.match.UserMatchInfoList
+import com.woosuk.navigation.SharedScreen
 import com.woosuk.ui.MatchInfoItem
 import com.woosuk.ui.roundToDecimals
+import kotlinx.datetime.LocalDate
 
 class CalendarTab : Tab {
     override val options: TabOptions
@@ -53,6 +57,7 @@ class CalendarTab : Tab {
         val snackBarController = LocalSnackbarController.current
         val selectedDate = screenModel.selectedDate.collectAsState().value
         val userMatchInfoList = screenModel.userMatchInfoList.collectAsState().value
+        val tabNavigator = LocalTabNavigator.current
 
         LaunchedEffect(null) {
             screenModel.uiEvent.collect {
@@ -62,35 +67,57 @@ class CalendarTab : Tab {
             }
         }
 
-        LazyColumn {
-            item {
-                HorizontalCalendar(
-                    yearRange = screenModel.yearRange,
-                    selectedDate = selectedDate,
-                    onChangeDate = screenModel::onSelectDate,
+        CalendarScreen(
+            selectedDate = selectedDate,
+            yearRange = screenModel.yearRange,
+            onSelectDate = screenModel::onSelectDate,
+            userMatchInfoList = userMatchInfoList,
+            onNavigateToMatchDetails = {
+                tabNavigator.current = it
+            },
+        )
+    }
+}
+
+@Composable
+fun CalendarScreen(
+    selectedDate: LocalDate,
+    yearRange: IntRange,
+    onSelectDate: (LocalDate) -> Unit,
+    userMatchInfoList: UserMatchInfoList,
+    onNavigateToMatchDetails: (Tab) -> Unit,
+) {
+    LazyColumn {
+        item {
+            HorizontalCalendar(
+                yearRange = yearRange,
+                selectedDate = selectedDate,
+                onChangeDate = onSelectDate,
+            )
+        }
+
+        item {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    "${selectedDate.year}년 ${selectedDate.monthNumber}월 ${selectedDate.dayOfMonth}일",
+                    style = WoosukTheme.typography.heading5,
+                    textAlign = TextAlign.Center,
+                    modifier =
+                        Modifier.padding(
+                            vertical = WoosukTheme.padding.BasicContentPadding,
+                        ).align(Alignment.Center),
                 )
             }
-
-            item {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        "${selectedDate.year}년 ${selectedDate.monthNumber}월 ${selectedDate.dayOfMonth}일",
-                        style = WoosukTheme.typography.heading5,
-                        textAlign = TextAlign.Center,
-                        modifier =
-                            Modifier.padding(
-                                vertical = WoosukTheme.padding.BasicContentPadding,
-                            ).align(Alignment.Center),
-                    )
-                }
-            }
-            MatchInfoSection(userMatchInfoList)
         }
+        MatchInfoSection(userMatchInfoList, onNavigateToMatchDetails)
     }
 }
 
 @Suppress("ktlint:standard:function-naming")
-fun LazyListScope.MatchInfoSection(userMatchInfoList: UserMatchInfoList) {
+fun LazyListScope.MatchInfoSection(
+    userMatchInfoList: UserMatchInfoList,
+    onClickMatch: (Tab) -> Unit,
+) {
     if (userMatchInfoList.list.isEmpty()) {
         item {
             Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
@@ -128,7 +155,19 @@ fun LazyListScope.MatchInfoSection(userMatchInfoList: UserMatchInfoList) {
             items = userMatchInfoList.list,
             key = { it.gameInfo.matchId },
         ) { userMatchInfo ->
-            MatchInfoItem(userMatchInfo = userMatchInfo)
+            val matchDetailsScreen =
+                rememberScreen(
+                    SharedScreen.MatchDetailsScreen(
+                        userMatchInfo.gameInfo.matchId,
+                        LocalTabNavigator.current.current,
+                    ),
+                ) as Tab
+            MatchInfoItem(
+                userMatchInfo = userMatchInfo,
+                onClickView = {
+                    onClickMatch(matchDetailsScreen)
+                },
+            )
             Spacer(modifier = Modifier.height(WoosukTheme.padding.BasicContentPadding))
         }
     }

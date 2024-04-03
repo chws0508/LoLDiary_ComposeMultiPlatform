@@ -20,6 +20,7 @@ import com.woosuk.domain.di.useCaseModule
 import com.woosuk.home.HomeScreenModel
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
+import com.woosuk.matchdetails.MatchDetailsScreen
 import com.woosuk.navigation.SharedScreen
 import com.woosuk.network.di.networkModule
 import com.woosuk.network.di.serviceModule
@@ -40,7 +41,7 @@ internal fun App() {
         ) {
             Navigator(
                 MainScreen(),
-                onBackPressed = { false },
+                onBackPressed = { true },
             ) {
                 CurrentScreen()
             }
@@ -57,13 +58,16 @@ fun registerScreen() {
             HomeTab()
         }
         register<SharedScreen.SettingTab> {
-            SettingsTab(it.navigateToOnboarding)
+            SettingsTab(it.navigator)
         }
         register<SharedScreen.TabScreen> {
             TabScreen()
         }
         register<SharedScreen.CalendarTab> {
             CalendarTab()
+        }
+        register<SharedScreen.MatchDetailsScreen> {
+            MatchDetailsScreen(matchId = it.matchId, previousTab = it.previousTab)
         }
     }
 }

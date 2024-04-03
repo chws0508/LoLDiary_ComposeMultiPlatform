@@ -21,6 +21,7 @@ kotlin {
             implementation(project(":feature:onboarding"))
             implementation(project(":feature:home"))
             implementation(project(":feature:calendar"))
+            implementation(project(":feature:matchdetails"))
             implementation(project(":core:database"))
         }
     }

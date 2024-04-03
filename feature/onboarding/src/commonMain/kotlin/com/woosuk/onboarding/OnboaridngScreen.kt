@@ -43,11 +43,13 @@ import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.model.Account
 import com.woosuk.domain.model.LoginInfo
 import com.woosuk.navigation.SharedScreen
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.collectLatest
 
-class OnboardingScreen() : Screen {
+class OnboardingScreen : Screen {
     @Composable
     override fun Content() {
+        Napier.v(LocalNavigator.currentOrThrow.items.toString(), tag = "wooseok")
         val screenModel = getScreenModel<OnboardingScreenModel>()
         val loginInfo by screenModel.loginInfo.collectAsState()
         val recentLoginUsers by screenModel.recentLoginUsers.collectAsState()
