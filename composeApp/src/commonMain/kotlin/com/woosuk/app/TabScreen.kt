@@ -12,13 +12,13 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
@@ -28,11 +28,16 @@ import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
+import com.woosuk.navigation.getRootNavigator
+import com.woosuk.navigation.getSharedScreenModel
 
 class TabScreen : Screen {
     @Composable
     override fun Content() {
-        val rootNavigator = LocalNavigator.currentOrThrow
+        val rootNavigator = getRootNavigator()
+        val sharedScreenModel = getSharedScreenModel()
+        val showBottomBar by sharedScreenModel.showBottomBar.collectAsState()
+
         TabNavigator(HomeTab()) {
             BackPressHandler(it, rootNavigator)
             Scaffold(
@@ -44,19 +49,14 @@ class TabScreen : Screen {
                     }
                 },
                 bottomBar = {
-                    when (it.current) {
-                        is HomeTab, is SettingsTab, is CalendarTab -> {
-                            NavigationBar(
-                                containerColor = WoosukTheme.colors.Black0,
-                                tonalElevation = 5.dp,
-                            ) {
-                                TabNavigationItem(HomeTab())
-                                TabNavigationItem(CalendarTab())
-                                TabNavigationItem(SettingsTab(rootNavigator))
-                            }
-                        }
-
-                        else -> {
+                    if (showBottomBar) {
+                        NavigationBar(
+                            containerColor = WoosukTheme.colors.Black0,
+                            tonalElevation = 5.dp,
+                        ) {
+                            TabNavigationItem(HomeTab())
+                            TabNavigationItem(CalendarTab())
+                            TabNavigationItem(SettingsTab(rootNavigator))
                         }
                     }
                 },

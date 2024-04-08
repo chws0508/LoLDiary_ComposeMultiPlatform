@@ -3,32 +3,19 @@ package com.woosuk.matchdetails
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
-import cafe.adriel.voyager.navigator.tab.Tab
-import cafe.adriel.voyager.navigator.tab.TabOptions
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.woosuk.designsystem.ui.BackButtonTopAppBar
+import com.woosuk.navigation.NavigationBarInvisibleScreen
 
 class MatchDetailsScreen(
-    val previousTab: Tab,
     private val matchId: String,
-) : Tab {
-    override val options: TabOptions
-        @Composable
-        get() {
-            return remember {
-                TabOptions(
-                    index = 0u,
-                    title = "matchDetails",
-                )
-            }
-        }
-
+) : NavigationBarInvisibleScreen() {
     @Composable
-    override fun Content() {
-        val navigator = LocalTabNavigator.current
+    override fun ScreenContent() {
+        val navigator = LocalNavigator.currentOrThrow
         MatchDetailsContent(
-            onClickBackButton = { navigator.current = previousTab },
+            onClickBackButton = { navigator.pop() },
         )
     }
 }

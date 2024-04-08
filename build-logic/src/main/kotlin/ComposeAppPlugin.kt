@@ -41,6 +41,7 @@ internal fun Project.configureComposeApp() {
                 implementation(libs.findLibrary("voyager.screenModel").get())
                 implementation(libs.findLibrary("voyager.koin").get())
                 implementation(libs.findLibrary("voyager.tabNavigator").get())
+                implementation(libs.findLibrary("voyager.transitions").get())
                 implementation(libs.findLibrary("kotlinx.coroutines.core").get())
                 implementation(libs.findLibrary("kotlinx.datetime").get())
                 implementation(libs.findLibrary("koin.core").get())

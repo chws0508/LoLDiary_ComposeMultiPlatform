@@ -14,7 +14,6 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.woosuk.calendar.CalendarTab
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
-import com.woosuk.matchdetails.MatchDetailsScreen
 
 @Composable
 actual fun BackPressHandler(
@@ -38,8 +37,6 @@ actual fun BackPressHandler(
             }
 
             is CalendarTab, is SettingsTab -> tabNavigator.current = HomeTab()
-
-            is MatchDetailsScreen -> tabNavigator.current = currentTab.previousTab
         }
     }
 }

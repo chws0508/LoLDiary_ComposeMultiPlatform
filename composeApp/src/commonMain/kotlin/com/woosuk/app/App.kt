@@ -22,6 +22,7 @@ import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
 import com.woosuk.matchdetails.MatchDetailsScreen
 import com.woosuk.navigation.SharedScreen
+import com.woosuk.navigation.SharedScreenModel
 import com.woosuk.network.di.networkModule
 import com.woosuk.network.di.serviceModule
 import com.woosuk.onboarding.OnboardingScreen
@@ -67,7 +68,7 @@ fun registerScreen() {
             CalendarTab()
         }
         register<SharedScreen.MatchDetailsScreen> {
-            MatchDetailsScreen(matchId = it.matchId, previousTab = it.previousTab)
+            MatchDetailsScreen(matchId = it.matchId)
         }
     }
 }
@@ -78,6 +79,7 @@ val screenModelModule =
         factory { MainScreenModel(get(), get()) }
         factory { HomeScreenModel(get(), get()) }
         factory { CalendarScreenModel(get(), get()) }
+        single { SharedScreenModel() }
     }
 
 val sharedModules =
