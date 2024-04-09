@@ -1,6 +1,7 @@
 package com.woosuk.domain.repository
 
 import com.woosuk.domain.model.ErrorState
+import com.woosuk.domain.model.match.MatchDetails
 import com.woosuk.domain.model.match.UserMatchInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDateTime
@@ -15,4 +16,10 @@ interface MatchRepository {
         puuid: String,
         onError: (ErrorState) -> Unit,
     ): Flow<List<UserMatchInfo>>
+
+    fun getUserMatchDetail(
+        matchId: String,
+        puuid: String,
+        onError: suspend (ErrorState) -> Unit,
+    ): Flow<MatchDetails>
 }

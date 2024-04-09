@@ -6,8 +6,14 @@ import com.woosuk.domain.model.date.Date
 import com.woosuk.domain.model.match.Champion
 import com.woosuk.domain.model.match.GameInfo
 import com.woosuk.domain.model.match.Item
+import com.woosuk.domain.model.match.Lane.BOTTOM
+import com.woosuk.domain.model.match.Lane.JUNGLE
+import com.woosuk.domain.model.match.Lane.MIDDLE
+import com.woosuk.domain.model.match.Lane.TOP
+import com.woosuk.domain.model.match.Lane.UTILITY
 import com.woosuk.domain.model.match.QueueType
 import com.woosuk.domain.model.match.Spell
+import com.woosuk.domain.model.match.TeamColor
 import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.model.match.UserStats
 import com.woosuk.network.model.MatchInfoDto
@@ -77,5 +83,20 @@ fun MatchInfoDto.toUserMatchInfo(puuid: String): UserMatchInfo {
                 assist = user.assists,
                 isWin = user.win,
             ),
+        lane =
+            when (user.individualPosition) {
+                "TOP" -> TOP
+                "JUNGLE" -> JUNGLE
+                "MIDDLE" -> MIDDLE
+                "BOTTOM" -> BOTTOM
+                "UTILITY" -> UTILITY
+                else -> TOP
+            },
+        team =
+            when (user.teamId) {
+                100 -> TeamColor.Blue
+                200 -> TeamColor.Red
+                else -> throw IllegalStateException("팀 아이디 값이 이상해요")
+            },
     )
 }

@@ -21,6 +21,7 @@ import com.woosuk.home.HomeScreenModel
 import com.woosuk.home.HomeTab
 import com.woosuk.home.SettingsTab
 import com.woosuk.matchdetails.MatchDetailsScreen
+import com.woosuk.matchdetails.MatchDetailsScreenModel
 import com.woosuk.navigation.SharedScreen
 import com.woosuk.navigation.SharedScreenModel
 import com.woosuk.network.di.networkModule
@@ -79,6 +80,7 @@ val screenModelModule =
         factory { MainScreenModel(get(), get()) }
         factory { HomeScreenModel(get(), get()) }
         factory { CalendarScreenModel(get(), get()) }
+        factory { MatchDetailsScreenModel(get()) }
         single { SharedScreenModel() }
     }
 

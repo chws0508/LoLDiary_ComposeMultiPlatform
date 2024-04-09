@@ -1,8 +1,12 @@
 package com.woosuk.data.repository
 
 import com.skydoves.sandwich.getOrThrow
+import com.skydoves.sandwich.suspendMapSuccess
+import com.woosuk.data.handleError
+import com.woosuk.data.mapper.toMatchDetail
 import com.woosuk.data.mapper.toUserMatchInfo
 import com.woosuk.domain.model.ErrorState
+import com.woosuk.domain.model.match.MatchDetails
 import com.woosuk.domain.model.match.UserMatchInfo
 import com.woosuk.domain.repository.MatchRepository
 import com.woosuk.network.service.MatchService
@@ -56,5 +60,17 @@ class DefaultMatchRepository(
         }.catch {
             println("wooseok" + it.message.toString())
             onError(ErrorState(null, it.message))
+        }.flowOn(coroutineDispatcher)
+
+    override fun getUserMatchDetail(
+        matchId: String,
+        puuid: String,
+        onError: suspend (ErrorState) -> Unit,
+    ): Flow<MatchDetails> =
+        flow {
+            matchService.getMatchInfo(matchId)
+                .suspendMapSuccess {
+                    emit(this.toMatchDetail(puuid))
+                }.handleError(onError)
         }.flowOn(coroutineDispatcher)
 }

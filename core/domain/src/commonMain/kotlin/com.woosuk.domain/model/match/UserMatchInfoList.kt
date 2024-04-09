@@ -1,9 +1,10 @@
 package com.woosuk.domain.model.match
 
-class UserMatchInfoList(
-    initValue: List<UserMatchInfo>,
+data class UserMatchInfoList(
+    private val initValue: List<UserMatchInfo>,
 ) {
-    val list = initValue.toList()
+    val list: List<UserMatchInfo>
+        get() = initValue.toList()
 
     val totalWins =
         initValue.fold(0) { acc, userMatchInfo ->
@@ -21,5 +22,20 @@ class UserMatchInfoList(
             totalLosses == 0 && totalWins == 0 -> 0.0F
             totalLosses == 0 -> 100.0F
             else -> totalWins.toFloat() * 100 / list.size
+        }
+
+    val totalKill =
+        initValue.fold(0) { acc, userMatchInfo ->
+            acc + userMatchInfo.userStats.kill
+        }
+
+    val totalAssist =
+        initValue.fold(0) { acc, userMatchInfo ->
+            acc + userMatchInfo.userStats.assist
+        }
+
+    val totalDeath =
+        initValue.fold(0) { acc, userMatchInfo ->
+            acc + userMatchInfo.userStats.death
         }
 }

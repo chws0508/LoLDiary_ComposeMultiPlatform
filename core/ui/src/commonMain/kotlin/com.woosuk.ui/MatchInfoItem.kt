@@ -98,7 +98,7 @@ fun MatchInfoItem(
 
 @Composable
 fun ItemSection(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     itemList: List<Item>,
     isWin: Boolean,
 ) {
@@ -200,6 +200,8 @@ fun ChampionRuneSpellSection(
     champion: Champion,
     runes: List<Rune>,
     spells: List<Spell>,
+    championImageSize: Int = 48,
+    runeAndSpellSize: Int = 24,
 ) {
     Row(
         modifier = modifier,
@@ -207,31 +209,31 @@ fun ChampionRuneSpellSection(
         KamelImage(
             resource = asyncPainterResource(champion.imageUrl),
             contentDescription = "챔피언",
-            modifier = Modifier.size(48.dp).clip(CircleShape),
+            modifier = Modifier.size(championImageSize.dp).clip(CircleShape),
         )
         Spacer(modifier = Modifier.width(5.dp))
         Column {
             KamelImage(
                 resource = asyncPainterResource(spells[0].imageUrl),
                 contentDescription = "첫번쨰 스펠",
-                modifier = Modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(runeAndSpellSize.dp).clip(CircleShape),
             )
             KamelImage(
                 resource = asyncPainterResource(spells[1].imageUrl),
                 contentDescription = "두번쨰 스펠",
-                modifier = Modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(runeAndSpellSize.dp).clip(CircleShape),
             )
         }
         Column {
             KamelImage(
                 resource = asyncPainterResource(runes[0].imageUrl),
                 contentDescription = "첫번째 룬",
-                modifier = Modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(runeAndSpellSize.dp).clip(CircleShape),
             )
             KamelImage(
                 resource = asyncPainterResource(runes[1].imageUrl),
                 contentDescription = "두번째 룬",
-                modifier = Modifier.size(24.dp).clip(CircleShape),
+                modifier = Modifier.size(runeAndSpellSize.dp).clip(CircleShape),
             )
         }
     }

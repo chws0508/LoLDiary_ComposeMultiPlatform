@@ -2,6 +2,7 @@ package com.woosuk.domain.di
 
 import com.woosuk.domain.usecase.GetCurrentAccountUseCase
 import com.woosuk.domain.usecase.GetCurrentUserUseCase
+import com.woosuk.domain.usecase.GetMatchDetailsUseCase
 import com.woosuk.domain.usecase.GetRecentAccountsUseCase
 import com.woosuk.domain.usecase.GetUserMatchInfoListByDateUseCase
 import com.woosuk.domain.usecase.GetUserMatchInfoPagingUseCase
@@ -16,4 +17,5 @@ val useCaseModule =
         single { GetCurrentUserUseCase(get()) }
         single { GetUserMatchInfoPagingUseCase(get()) }
         single { GetUserMatchInfoListByDateUseCase(get()) }
+        single { GetMatchDetailsUseCase(get(), get()) }
     }

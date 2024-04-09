@@ -1,10 +1,7 @@
 package com.woosuk.data.repository
 
-import com.skydoves.sandwich.ktor.statusCode
-import com.skydoves.sandwich.messageOrNull
 import com.skydoves.sandwich.suspendMapSuccess
-import com.skydoves.sandwich.suspendOnError
-import com.skydoves.sandwich.suspendOnException
+import com.woosuk.data.handleError
 import com.woosuk.data.mapper.toAccount
 import com.woosuk.data.mapper.toAccountEntity
 import com.woosuk.database.AccountDatabaseDataSource
@@ -21,39 +18,34 @@ import kotlinx.coroutines.flow.map
 
 class DefaultAccountRepository(
     private val accountService: AccountService,
-    private val userDatabaseDataSource: AccountDatabaseDataSource
+    private val userDatabaseDataSource: AccountDatabaseDataSource,
 ) : AccountRepository {
-
     override fun getAccount(
         nickName: String,
         tag: String,
-        onError: suspend (ErrorState) -> Unit
-    ): Flow<Account> = flow {
-        getPuuid(nickName, tag, onError).collect { puuid ->
-            accountService.getSummoner(puuid).suspendMapSuccess {
-                emit(
-                    Account(
-                        puuid = puuid,
-                        summonerId = id,
-                        nickName = nickName,
-                        tag = tag,
-                        isCurrentUser = false
+        onError: suspend (ErrorState) -> Unit,
+    ): Flow<Account> =
+        flow {
+            getPuuid(nickName, tag, onError).collect { puuid ->
+                accountService.getSummoner(puuid).suspendMapSuccess {
+                    emit(
+                        Account(
+                            puuid = puuid,
+                            summonerId = id,
+                            nickName = nickName,
+                            tag = tag,
+                            isCurrentUser = false,
+                        ),
                     )
-                )
-            }.suspendOnError {
-                onError(ErrorState(statusCode.code, messageOrNull))
-            }.suspendOnException {
-                onError(ErrorState(ErrorState.ExceptionCode, messageOrNull))
+                }.handleError(onError)
             }
-        }
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 
     override fun getAllAccounts(): Flow<List<Account>> =
         userDatabaseDataSource.getAllAccounts()
             .map { entities -> entities.map { it.toAccount() } }
 
-    override suspend fun getCurrentAccount(): Account? =
-        userDatabaseDataSource.getCurrentAccount()?.toAccount()
+    override suspend fun getCurrentAccount(): Account? = userDatabaseDataSource.getCurrentAccount()?.toAccount()
 
     override suspend fun saveAccount(account: Account) {
         userDatabaseDataSource.insertAccount(account.toAccountEntity(true))
@@ -62,14 +54,10 @@ class DefaultAccountRepository(
     private fun getPuuid(
         nickName: String,
         tag: String,
-        onError: suspend (ErrorState) -> Unit
+        onError: suspend (ErrorState) -> Unit,
     ) = flow {
         accountService.getPuuid(nickName, tag).suspendMapSuccess {
             emit(puuid)
-        }.suspendOnError {
-            onError(ErrorState(statusCode.code, messageOrNull))
-        }.suspendOnException {
-            onError(ErrorState(-1, messageOrNull))
-        }
+        }.handleError(onError)
     }
 }

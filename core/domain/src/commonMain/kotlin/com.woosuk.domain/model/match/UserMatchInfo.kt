@@ -10,4 +10,19 @@ data class UserMatchInfo(
     val runes: List<Rune>,
     val gameInfo: GameInfo,
     val userStats: UserStats,
+    val lane: Lane,
+    val team: TeamColor,
 )
+
+enum class Lane {
+    TOP,
+    JUNGLE,
+    MIDDLE,
+    BOTTOM,
+    UTILITY,
+}
+
+enum class TeamColor {
+    Blue,
+    Red,
+}

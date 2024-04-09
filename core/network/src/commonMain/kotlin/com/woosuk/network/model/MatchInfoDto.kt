@@ -57,6 +57,8 @@ data class ParticipantDto(
     val summoner2Id: Int,
     val perks: PerksDto,
     val win: Boolean,
+    val individualPosition: String,
+    val teamId: Int,
 )
 
 @Serializable
