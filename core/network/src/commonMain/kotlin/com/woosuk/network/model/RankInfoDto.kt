@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class RankInfoDto(
     val leagueId: String,
     val summonerId: String,
-    val summonerName: String,
     val queueType: String,
     val tier: String,
     val rank: String,
