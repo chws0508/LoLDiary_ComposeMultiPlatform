@@ -7,5 +7,7 @@ interface AccountDatabaseDataSource {
 
     suspend fun getCurrentAccount(): AccountEntity?
 
+    suspend fun initCurrentAccount(): Boolean
+
     suspend fun insertAccount(AccountEntity: AccountEntity)
 }

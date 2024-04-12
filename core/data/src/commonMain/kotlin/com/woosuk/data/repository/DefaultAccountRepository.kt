@@ -51,6 +51,11 @@ class DefaultAccountRepository(
         userDatabaseDataSource.insertAccount(account.toAccountEntity(true))
     }
 
+    override fun initCurrentAccount(): Flow<Boolean> =
+        flow {
+            emit(userDatabaseDataSource.initCurrentAccount())
+        }
+
     private fun getPuuid(
         nickName: String,
         tag: String,

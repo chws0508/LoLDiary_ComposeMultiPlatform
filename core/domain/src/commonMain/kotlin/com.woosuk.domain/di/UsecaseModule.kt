@@ -6,6 +6,7 @@ import com.woosuk.domain.usecase.GetMatchDetailsUseCase
 import com.woosuk.domain.usecase.GetRecentAccountsUseCase
 import com.woosuk.domain.usecase.GetUserMatchInfoListByDateUseCase
 import com.woosuk.domain.usecase.GetUserMatchInfoPagingUseCase
+import com.woosuk.domain.usecase.LogOutUseCase
 import com.woosuk.domain.usecase.LoginUseCase
 import org.koin.dsl.module
 
@@ -18,4 +19,5 @@ val useCaseModule =
         single { GetUserMatchInfoPagingUseCase(get()) }
         single { GetUserMatchInfoListByDateUseCase(get()) }
         single { GetMatchDetailsUseCase(get(), get()) }
+        single { LogOutUseCase(get()) }
     }

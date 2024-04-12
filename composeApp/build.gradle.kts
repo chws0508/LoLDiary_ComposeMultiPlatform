@@ -22,6 +22,7 @@ kotlin {
             implementation(project(":feature:home"))
             implementation(project(":feature:calendar"))
             implementation(project(":feature:matchdetails"))
+            implementation(project(":feature:setting"))
             implementation(project(":core:database"))
         }
     }

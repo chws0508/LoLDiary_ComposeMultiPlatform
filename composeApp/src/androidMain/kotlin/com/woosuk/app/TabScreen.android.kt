@@ -13,7 +13,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.woosuk.calendar.CalendarTab
 import com.woosuk.home.HomeTab
-import com.woosuk.home.SettingsTab
+import com.woosuk.setting.SettingsTab
 
 @Composable
 actual fun BackPressHandler(

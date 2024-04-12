@@ -21,7 +21,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.getNavigatorScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.woosuk.designsystem.LocalSnackbarController
@@ -35,11 +35,11 @@ import com.woosuk.ui.MatchInfoItem
 class HomeScreen : NavigationBarVisibleScreen() {
     @Composable
     override fun ScreenContent() {
+        val navigator = LocalNavigator.currentOrThrow
         val snackBarController = LocalSnackbarController.current
-        val homeScreenModel = getScreenModel<HomeScreenModel>()
+        val homeScreenModel = navigator.getNavigatorScreenModel<HomeScreenModel>()
         val userUiState = homeScreenModel.userUiState.collectAsState().value
         val matchInfoList = homeScreenModel.matchInfoList.collectAsLazyPagingItems()
-        val navigator = LocalNavigator.currentOrThrow
         val sharedScreenModel = getSharedScreenModel()
         sharedScreenModel.setBottomBarVisibility(true)
 

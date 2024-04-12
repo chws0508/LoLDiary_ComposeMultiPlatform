@@ -1,12 +1,11 @@
 package com.woosuk.navigation
 
 import cafe.adriel.voyager.core.registry.ScreenProvider
-import cafe.adriel.voyager.navigator.Navigator
 
 sealed class SharedScreen : ScreenProvider {
-    data class TabScreen(val navigator: Navigator) : SharedScreen()
+    data object TabScreen : SharedScreen()
 
-    data class SettingTab(val navigator: Navigator) : SharedScreen()
+    data object SettingTab : SharedScreen()
 
     data object CalendarTab : SharedScreen()
 

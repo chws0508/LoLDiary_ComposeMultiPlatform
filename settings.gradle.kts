@@ -11,6 +11,7 @@ include(":feature:onboarding")
 include(":feature:home")
 include(":feature:calendar")
 include(":feature:matchdetails")
+include(":feature:setting")
 
 pluginManagement {
     includeBuild("build-logic")

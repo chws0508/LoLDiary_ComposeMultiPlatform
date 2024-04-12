@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.rememberScreen
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -56,7 +56,7 @@ class OnboardingScreen : Screen {
         val isLoading by screenModel.isLoading.collectAsState()
         val snackBarController = LocalSnackbarController.current
         val navigator = LocalNavigator.currentOrThrow
-        val tabScreen = rememberScreen(SharedScreen.TabScreen(LocalNavigator.currentOrThrow))
+
         Scaffold(
             snackbarHost = { SnackbarHost(LocalSnackbarController.current.snackBarHostState) },
         ) {
@@ -85,7 +85,7 @@ class OnboardingScreen : Screen {
                     }
 
                     is OnBoardingSideEffect.LoginSuccess -> {
-                        navigator.replace(tabScreen)
+                        navigator.replace(ScreenRegistry.get(SharedScreen.TabScreen))
                     }
                 }
             }
@@ -108,7 +108,7 @@ internal fun OnboardingScreenContent(
                 .padding(WoosukTheme.padding.BasicHorizontalPadding),
     ) {
         Text(
-            "나의 계정을 등록하세요",
+            "나의 소환사를 등록하세요",
             style = WoosukTheme.typography.heading5,
             modifier = Modifier.padding(vertical = WoosukTheme.padding.BasicContentPadding),
         )
@@ -186,7 +186,7 @@ internal fun OnboardingScreenContent(
             contentPadding = PaddingValues(20.dp),
         ) {
             Text(
-                "로그인",
+                "등록",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = WoosukTheme.typography.bodyLargeMedium,
@@ -194,7 +194,7 @@ internal fun OnboardingScreenContent(
         }
 
         Text(
-            "로그인 기록",
+            "소환사 기록",
             style = WoosukTheme.typography.heading5,
             modifier = Modifier.padding(vertical = WoosukTheme.padding.LargeVerticalPadding),
         )

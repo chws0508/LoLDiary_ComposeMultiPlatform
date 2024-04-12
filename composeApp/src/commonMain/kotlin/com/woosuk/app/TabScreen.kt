@@ -27,9 +27,9 @@ import com.woosuk.calendar.CalendarTab
 import com.woosuk.designsystem.LocalSnackbarController
 import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.home.HomeTab
-import com.woosuk.home.SettingsTab
 import com.woosuk.navigation.getRootNavigator
 import com.woosuk.navigation.getSharedScreenModel
+import com.woosuk.setting.SettingsTab
 
 class TabScreen : Screen {
     @Composable
@@ -56,7 +56,7 @@ class TabScreen : Screen {
                         ) {
                             TabNavigationItem(HomeTab())
                             TabNavigationItem(CalendarTab())
-                            TabNavigationItem(SettingsTab(rootNavigator))
+                            TabNavigationItem(SettingsTab())
                         }
                     }
                 },

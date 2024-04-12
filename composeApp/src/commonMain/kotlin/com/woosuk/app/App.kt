@@ -19,7 +19,6 @@ import com.woosuk.designsystem.theme.WoosukTheme
 import com.woosuk.domain.di.useCaseModule
 import com.woosuk.home.HomeScreenModel
 import com.woosuk.home.HomeTab
-import com.woosuk.home.SettingsTab
 import com.woosuk.matchdetails.MatchDetailsScreen
 import com.woosuk.matchdetails.MatchDetailsScreenModel
 import com.woosuk.navigation.SharedScreen
@@ -28,6 +27,8 @@ import com.woosuk.network.di.networkModule
 import com.woosuk.network.di.serviceModule
 import com.woosuk.onboarding.OnboardingScreen
 import com.woosuk.onboarding.OnboardingScreenModel
+import com.woosuk.setting.SettingScreenModel
+import com.woosuk.setting.SettingsTab
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.dsl.module
@@ -60,7 +61,7 @@ fun registerScreen() {
             HomeTab()
         }
         register<SharedScreen.SettingTab> {
-            SettingsTab(it.navigator)
+            SettingsTab()
         }
         register<SharedScreen.TabScreen> {
             TabScreen()
@@ -81,6 +82,7 @@ val screenModelModule =
         factory { HomeScreenModel(get(), get()) }
         factory { CalendarScreenModel(get(), get()) }
         factory { MatchDetailsScreenModel(get()) }
+        factory { SettingScreenModel(get(), get()) }
         single { SharedScreenModel() }
     }
 

@@ -24,7 +24,6 @@ class OnboardingScreenModel(
     private val loginUseCase: LoginUseCase,
     getRecentUsersUseCase: GetRecentAccountsUseCase,
 ) : ScreenModel {
-
     private val _sideEffect: Channel<OnBoardingSideEffect> = Channel()
     val sideEffect = _sideEffect.receiveAsFlow()
 
@@ -34,26 +33,31 @@ class OnboardingScreenModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    val recentLoginUsers = getRecentUsersUseCase().stateIn(
-        screenModelScope,
-        SharingStarted.WhileSubscribed(),
-        emptyList(),
-    )
+    val recentLoginUsers =
+        getRecentUsersUseCase().stateIn(
+            screenModelScope,
+            SharingStarted.WhileSubscribed(),
+            emptyList(),
+        )
 
     private lateinit var loadingJob: Job
 
-    fun login(gameName: String, tagLine: String) {
+    fun login(
+        gameName: String,
+        tagLine: String,
+    ) {
         loginUseCase(
             nickName = gameName,
             tag = tagLine,
-            onError = { errorState -> _sideEffect.send(OnBoardingSideEffect.LoginFail(errorState)) }
+            onError = { errorState -> _sideEffect.send(OnBoardingSideEffect.LoginFail(errorState)) },
         ).onStart {
-            loadingJob =screenModelScope.launch {
-                delay(500L)
-                _isLoading.update { true }
-            }
+            loadingJob =
+                screenModelScope.launch {
+                    delay(500L)
+                    _isLoading.update { true }
+                }
         }.onEach {
-            _sideEffect.send(OnBoardingSideEffect.LoginSuccess)
+            _sideEffect.send(OnBoardingSideEffect.LoginSuccess(it.puuid))
         }.onCompletion {
             loadingJob.cancel()
             _isLoading.update { false }

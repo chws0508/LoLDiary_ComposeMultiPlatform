@@ -16,8 +16,15 @@ class DefaultAccountDatabaseResource(
             .flowOn(Dispatchers.IO)
             .mapToList(Dispatchers.IO)
 
-    override suspend fun getCurrentAccount(): AccountEntity? =
-        accountQueries.selectCurrentAccount(1).executeAsOneOrNull()
+    override suspend fun getCurrentAccount(): AccountEntity? = accountQueries.selectCurrentAccount(1).executeAsOneOrNull()
+
+    override suspend fun initCurrentAccount(): Boolean {
+        accountQueries.initCurrentAccount(
+            0,
+            1,
+        )
+        return getCurrentAccount() == null
+    }
 
     override suspend fun insertAccount(AccountEntity: AccountEntity) {
         accountQueries.insertFullAccount(AccountEntity)

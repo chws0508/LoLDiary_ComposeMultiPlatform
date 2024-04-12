@@ -21,3 +21,8 @@ insertFullAccount:
 INSERT OR REPLACE INTO accountEntity(puuid, nick_name,tag,is_current_user,summoner_id)
 VALUES ?
 ;
+
+initCurrentAccount:
+UPDATE accountEntity SET is_current_user = ? WHERE is_current_user = ?
+;
+
