@@ -14,7 +14,7 @@ class MainScreenModel(
     private val getCurrentAccountUseCase: GetCurrentAccountUseCase,
     private val urlRepository: UrlRepository,
 ) : ScreenModel {
-    private val _isLogin = Channel<Boolean>()
+    private val _isLogin = Channel<String?>()
     val isLogin = _isLogin.receiveAsFlow()
 
     init {
@@ -23,10 +23,11 @@ class MainScreenModel(
             // CdnUrlPrefix와 룬정보를 모두 업데이트 한 후에, 다음 화면으로 넘어간다.
             urlRepository.updateCdnUrlPrefix().collectLatest {
                 RuneRepository.updateRunes(it).collect {
-                    if (getCurrentAccountUseCase() == null) {
-                        _isLogin.send(false)
+                    val account = getCurrentAccountUseCase()
+                    if (account == null) {
+                        _isLogin.send(null)
                     } else {
-                        _isLogin.send(true)
+                        _isLogin.send(account.puuid)
                     }
                 }
             }

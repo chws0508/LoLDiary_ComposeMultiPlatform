@@ -85,7 +85,7 @@ class OnboardingScreen : Screen {
                     }
 
                     is OnBoardingSideEffect.LoginSuccess -> {
-                        navigator.replace(ScreenRegistry.get(SharedScreen.TabScreen))
+                        navigator.replace(ScreenRegistry.get(SharedScreen.TabScreen(it.puuid)))
                     }
                 }
             }

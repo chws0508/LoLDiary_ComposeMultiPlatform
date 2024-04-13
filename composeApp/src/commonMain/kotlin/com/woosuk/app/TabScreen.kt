@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
@@ -31,7 +32,12 @@ import com.woosuk.navigation.getRootNavigator
 import com.woosuk.navigation.getSharedScreenModel
 import com.woosuk.setting.SettingsTab
 
-class TabScreen : Screen {
+class TabScreen(
+    private val initKey: String,
+) : Screen {
+    override val key: ScreenKey
+        get() = initKey
+
     @Composable
     override fun Content() {
         val rootNavigator = getRootNavigator()

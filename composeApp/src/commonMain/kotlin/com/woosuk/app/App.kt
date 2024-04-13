@@ -64,7 +64,7 @@ fun registerScreen() {
             SettingsTab()
         }
         register<SharedScreen.TabScreen> {
-            TabScreen()
+            TabScreen(it.initKey)
         }
         register<SharedScreen.CalendarTab> {
             CalendarTab()

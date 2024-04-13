@@ -14,9 +14,9 @@ class MainScreen() : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val mainScreenModel = getScreenModel<MainScreenModel>()
         LaunchedEffect(null) {
-            mainScreenModel.isLogin.collect { isLogin ->
-                if (isLogin) {
-                    navigator.replace(TabScreen())
+            mainScreenModel.isLogin.collect { puuid ->
+                if (puuid != null) {
+                    navigator.replace(TabScreen(puuid))
                 } else {
                     navigator.replace(OnboardingScreen())
                 }

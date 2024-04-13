@@ -3,7 +3,7 @@ package com.woosuk.navigation
 import cafe.adriel.voyager.core.registry.ScreenProvider
 
 sealed class SharedScreen : ScreenProvider {
-    data object TabScreen : SharedScreen()
+    data class TabScreen(val initKey: String) : SharedScreen()
 
     data object SettingTab : SharedScreen()
 
