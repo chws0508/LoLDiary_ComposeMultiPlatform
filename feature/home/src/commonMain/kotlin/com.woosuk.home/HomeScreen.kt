@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import app.cash.paging.compose.itemKey
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getNavigatorScreenModel
@@ -134,7 +135,8 @@ fun HomeScreenContent(
 
                         is LoadState.NotLoading -> {
                             items(
-                                matchInfoList.itemCount,
+                                count = matchInfoList.itemCount,
+                                key = matchInfoList.itemKey { it.gameInfo.matchId },
                             ) {
                                 val matchInfo = matchInfoList[it]!!
                                 val matchDetailsScreen =
