@@ -5,8 +5,10 @@
 </p>
 </br>
 
+## Android Demo
 <img src="/preview/android_demo.gif" width="320"/>
 
+## IOS Demo
 <img src="/preview/ios_demo.gif" width="320"/>
 
 ## Tech stack & Open-source libraries
