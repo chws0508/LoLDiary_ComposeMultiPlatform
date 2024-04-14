@@ -5,11 +5,9 @@
 </p>
 </br>
 
-# Android Demo
-<img src="/preview/android_demo.gif" align="right" width="320"/>
+<img src="/preview/android_demo.gif" width="320"/>
 
-# IOS Demo
-<img src="/preview/ios_demo.gif" align="right" width="320"/>
+<img src="/preview/ios_demo.gif" width="320"/>
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 24
