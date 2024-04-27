@@ -21,7 +21,6 @@
 - [Ktor](https://github.com/ktorio/ktor): Construct the REST APIs and paging network data.
 - [Sandwich](https://github.com/skydoves/Sandwich): Construct a lightweight and modern response interface to handle network payload for Android.
 - [Kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization): A modern JSON library for Kotlin.
-- [Turbine](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
 - [Material-Components](https://github.com/material-components/material-components-android): Material design components for building ripple animation, and CardView.
 - [Kamel](https://github.com/Kamel-Media/Kamel): Network Image Loading Library for Kotlin Multiplatform
 - [Napier](https://github.com/AAkira/Napier): logger library for Kotlin Multiplatform.
