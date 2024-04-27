@@ -24,7 +24,7 @@
 - [Turbine](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
 - [Material-Components](https://github.com/material-components/material-components-android): Material design components for building ripple animation, and CardView.
 - [Kamel](https://github.com/Kamel-Media/Kamel): Network Image Loading Library for Kotlin Multiplatform
-- [Timber](https://github.com/JakeWharton/timber): A logger with a small, extensible API.
+- [Napier](https://github.com/AAkira/Napier): logger library for Kotlin Multiplatform.
 - [SQLDelight](https://github.com/cashapp/sqldelight): Database Library for Kotlin Multiplatform
 - [Moko-Resources](https://github.com/icerockdev/moko-resources): Resource Library for Kotlin Multiplatform
 
